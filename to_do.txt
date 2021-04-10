@@ -1,0 +1,11 @@
+TODO:
+
+- loudspeaker icons after evaluation to listen to every chord
+- add data persistence to store results
+- add user setting: only diatonic chords
+- record and add arpeggiated chords (up + down) -> make user option
+- display name (root) of chord after evaluation
+
+
+- create screenshots for appstore / mockups for website
+- upload to appstore
