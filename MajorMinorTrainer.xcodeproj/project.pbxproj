@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA03000D2621DC5B00909D28 /* to_do.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA03000C2621DC5B00909D28 /* to_do.txt */; };
 		FA217C3E261C5060009EFECD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA217C3D261C5060009EFECD /* AppDelegate.swift */; };
 		FA217C40261C5060009EFECD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA217C3F261C5060009EFECD /* SceneDelegate.swift */; };
 		FA217C45261C5060009EFECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA217C43261C5060009EFECD /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA03000C2621DC5B00909D28 /* to_do.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = to_do.txt; sourceTree = SOURCE_ROOT; };
 		FA217C3A261C5060009EFECD /* MajorMinorTrainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MajorMinorTrainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA217C3D261C5060009EFECD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA217C3F261C5060009EFECD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				FA217C5C261C6BE3009EFECD /* Sounds */,
 				FA217C5A261C6BAD009EFECD /* etc. */,
 				FA217C4E261C5080009EFECD /* Info.plist */,
+				FA03000C2621DC5B00909D28 /* to_do.txt */,
 			);
 			path = MajorMinorTrainer;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				FAEF6311261DBE350098847B /* F#_maj.mp3 in Resources */,
 				FAEF6320261DBE350098847B /* A_min.mp3 in Resources */,
 				FA217C4D261C5080009EFECD /* LaunchScreen.storyboard in Resources */,
+				FA03000D2621DC5B00909D28 /* to_do.txt in Resources */,
 				FA217C4A261C5080009EFECD /* Assets.xcassets in Resources */,
 				FAEF630F261DBE350098847B /* F#_min.mp3 in Resources */,
 				FAEF631E261DBE350098847B /* B_maj.mp3 in Resources */,

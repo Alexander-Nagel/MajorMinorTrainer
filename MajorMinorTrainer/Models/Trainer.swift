@@ -15,8 +15,8 @@ enum chordQuality: Int {
 
 struct UserSettings {
     var numberOfChords: Int = 3
-    var pauseBetweenChords = 1.1
-    var pauseBetweenResults = 0.6
+    var pauseBetweenChords = 1.2
+    var pauseBetweenResults = 0.3
 }
 
 
@@ -24,6 +24,8 @@ class Trainer {
     
     var userSettings = UserSettings()
     //var numberOfChords = 4
+    //var pauseBetweenChords = 1.1
+    //var pauseBetweenResults = 0.6
     var sequence: [String]? = []
     var solution: [chordQuality]? = []
     var answer: [chordQuality] = []
@@ -38,8 +40,6 @@ class Trainer {
     
     
     
-    var pauseBetweenChords = 1.1
-    var pauseBetweenResults = 0.6
     
     init() {
         answer = Array(repeating: chordQuality.undefined, count: userSettings.numberOfChords)
@@ -76,4 +76,9 @@ class Trainer {
             //print(sequence)
         }
     }
+}
+
+func round (_ input: Double, toDigits digits: Int) -> Double {
+    
+    return Double(String(format: "%0.\(digits)f", input)) ?? 0
 }

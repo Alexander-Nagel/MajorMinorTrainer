@@ -1,11 +1,24 @@
-TODO:
+TO DO:
 
-- loudspeaker icons after evaluation to listen to every chord
-- add data persistence to store results
-- add user setting: only diatonic chords
-- record and add arpeggiated chords (up + down) -> make user option
-- display name (root) of chord after evaluation
+Bugs:
 
+- reset UI after numberOfChords has changed doesn't work!
 
+Necessary:
+
+- OK add rest of user settings to settings tab (pause between XXX in seconds...)
+- OK disable (hide?) evaluation button until all guesses are made
+- refactor / outsource StartVC.swift file, all evaluation stuff should happen in model, not in controller
+- create icons
 - create screenshots for appstore / mockups for website
 - upload to appstore
+
+
+Optional:
+
+- OK flash/re-color playing (green) chord button (not only question mark!) when re-playing sequence after evaluation
+- loudspeaker icons after evaluation to listen to every chord
+- add data persistence to store results
+- new user setting: only diatonic chords
+- new user setting: record and add arpeggiated chords (up + down) -> make user option
+- display name (root) of chord after evaluation

@@ -86,6 +86,9 @@ class StartVC: UIViewController {
         let navController = self.tabBarController?.viewControllers![1] as! UINavigationController
         let destinationVC = navController.topViewController as! SettingsVC
         destinationVC.numberOfChords = self.trainer.userSettings.numberOfChords
+        destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
+        destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
+        
     }
 }
 
@@ -146,6 +149,8 @@ extension StartVC {
             //button.setTitleShadowColor(.yellow, for: .selected)
             button.setTitleColor(K.Color.selectedLabelTextColor, for: .selected)
         }
+        
+        evaluateButton.isHidden = true
         
         resetUI()
     }
@@ -215,26 +220,31 @@ extension StartVC {
           
             
                 // set current questionmark color to black:
-                self.evalutationImageViews![arrIndex].tintColor = K.Color.questionMarkPlayingColor
+                //self.evalutationImageViews![arrIndex].tintColor = K.Color.questionMarkPlayingColor
+               
+                self.majorButtons[arrIndex].flash()
+                self.minorButtons[arrIndex].flash()
+                self.evalutationImageViews![arrIndex].flash()
+                
                 
                 // play sound
                 self.playSound(filename: name)
                 
                 // set previous questionmark color back to white:
-                if arrIndex > 0 {self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor}
+                //if arrIndex > 0 {self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor}
                 
                 arrIndex += 1
                 
             }
            
-            offset += self.trainer.pauseBetweenChords
+            offset += self.trainer.userSettings.pauseBetweenChords
         }
         
         //
         // Set last qustionmark back to white color
         //
         DispatchQueue.main.asyncAfter(deadline: (.now() + offset)) {
-            self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor
+            //self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor
             
             self.trainer.isPlaying = false
         }
@@ -282,7 +292,7 @@ extension StartVC {
         //print("FLASHING!")
         
         
-        print("colors  = \(self.trainer.imgColors)")
+        //print("colors  = \(self.trainer.imgColors)")
         
         guard let fileNames = trainer.sequence, let solution = trainer.solution /*, let answer = trainer.answer */ else {return}
         
@@ -290,38 +300,98 @@ extension StartVC {
         //
         // Play chords and set questionmark color of playing chord to black
         //
-        var offset = 0.0
-        var arrIndex = 0
+        var offset = 0.0 // offset in seconds = scheduled time to play each chord
+        var arrIndex = 0 // index of imgCols array (that remembers the colors to set back the imgViews). Counts from 0 to 1,2,3 or 4 (according to numberOfChords-1)
        
         trainer.isPlaying = true
         
+        //
+        // Go through each chord/filename, schedule its playing time
+        // When playing time is there: Play it and color imgView temporarily black
+        //
         for name in fileNames {
+            
+            //
+            // Schedule playing time of chord: First one immediately, each next one offset seconds later
+            //
             DispatchQueue.main.asyncAfter(deadline: (.now() + offset)) {
                 
+                //
+                // Set questionmark color to black temporarily while playing
+                //
+//                self.evalutationImageViews![arrIndex].tintColor = K.Color.questionMarkPlayingColor
                 
+                //
+                // Color maj or min button orange (if it' the solution)
+                //
+                if self.trainer.hasBeenEvaluated {
+                    if solution[arrIndex] == chordQuality.major {
+                        //                    self.majorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .selected)
+                        //                    self.majorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .normal)
+                        self.majorButtons[arrIndex].flash()
+                    } else {
+                        //                    self.minorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .selected)
+                        //                    self.minorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .normal)
+                        self.minorButtons[arrIndex].flash()
+                    }
+                } else {
+                    
+                    self.majorButtons[arrIndex].flash()
+                    self.minorButtons[arrIndex].flash()
+                    self.evalutationImageViews![arrIndex].flash()
+                    
+                }
                 
-                self.evalutationImageViews![arrIndex].tintColor = K.Color.questionMarkPlayingColor
+                //
+                // Play chord
+                //
                 self.playSound(filename: name)
+                
+                //
+                // Determine color to reset previous imgView (if exists)
+                // Can be green (checkmark) or red (X)
+                //
                 if arrIndex > 0 {
                     var oldColor = UIColor()
                     let criteria = self.trainer.imgColors[arrIndex-1]
                     switch criteria {
                     case "green":
-                        print("\(arrIndex) it's green")
+                        // print("\(arrIndex) it's green")
                         oldColor = K.Color.rightAnswerColor
                     case "red":
-                        print("\(arrIndex) it's red")
+                        //print("\(arrIndex) it's red")
                         oldColor = K.Color.wrongAnswerColor
                     default:
                         print("\(arrIndex) it's black")
                         oldColor = K.Color.questionMarkColor
                     }
+                    
+                    //
+                    // Reset previous imgView color
+                    //
                     self.evalutationImageViews![arrIndex-1].tintColor = oldColor
+                    
+                    //
+                    // Reset prevoius maj or min color to green (if it's the solution)
+                    //
+                    if self.trainer.hasBeenEvaluated {
+                        if solution[arrIndex-1] == chordQuality.major {
+                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
+                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                        } else {
+                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
+                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                        }
+                    }
                 }
+                
+                //
+                // Proceed to next imgColors array item
+                //
                 arrIndex += 1
                 
             }
-            offset += self.trainer.pauseBetweenChords
+            offset += self.trainer.userSettings.pauseBetweenChords
         }
             
         //
@@ -342,10 +412,35 @@ extension StartVC {
                 oldColor = K.Color.questionMarkColor
             }
             self.evalutationImageViews![arrIndex-1].tintColor = oldColor
+           
+            if  self.trainer.hasBeenEvaluated {
+                if solution[arrIndex-1] == chordQuality.major {
+                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
+                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                } else {
+                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
+                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                }
+            }
             
             self.trainer.isPlaying = false
         }
-     
+        
+        
+        
+        
+        //
+        // Reset previous maj or min color to green (if it's the solution)
+        //
+        let limit = (trainer.userSettings.numberOfChords - 1)
+        let timeToResetLastColor = (Double(limit + 1) * self.trainer.userSettings.pauseBetweenResults)
+        print("öööö \(timeToResetLastColor)")
+        
+        DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetLastColor)) {
+            
+        
+        }
+        
     }
 }
 
@@ -426,6 +521,10 @@ extension StartVC {
         //
         if !trainer.hasBeenEvaluated {
             
+            //
+            // Behaviour before evaluation: Chosen button is colored orange. Play NO ound when presed.
+            //
+            
             let tag = sender.tag
             print("Tag = \(tag)")
             switch tag {
@@ -488,6 +587,8 @@ extension StartVC {
             //
             if !trainer.answer.contains(chordQuality.undefined) {
                 evaluateButton.isEnabled = true
+                evaluateButton.isHidden = false
+                evaluateButton.flash(intervalDuration: 0.1, intervals: 30)
             }
             
             
@@ -704,14 +805,14 @@ extension StartVC {
                     //evalIm[index].isHidden = false
                 }
             }
-            offset += self.trainer.pauseBetweenResults
+            offset += self.trainer.userSettings.pauseBetweenResults
             //print("offset \(offset) added!")
         }
         
         //
         // Reset isPlaying flag to false
         //
-        let timeToResetPlayingStatus = (Double(limit + 2) * self.trainer.pauseBetweenResults)
+        let timeToResetPlayingStatus = (Double(limit + 2) * self.trainer.userSettings.pauseBetweenResults)
         DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetPlayingStatus)) {
             self.trainer.isEvaluating = false
         }
@@ -720,6 +821,7 @@ extension StartVC {
         // Disable evaluateButton, set hasBeenEvaluated flag
         //
         evaluateButton.isEnabled = false
+        evaluateButton.isHidden = true
         trainer.hasBeenEvaluated = true
     }
 }
@@ -751,7 +853,7 @@ public extension UIView {
 
     
     let initialAlpha: CGFloat = 1
-    let finalAlpha: CGFloat = 0.2
+    let finalAlpha: CGFloat = 0.5
     
     alpha = initialAlpha
     
@@ -772,21 +874,36 @@ public extension UIView {
 //
 extension UIButton {
 
-    func flash() {
-
-    
+    func flash(intervalDuration duration: Double = 0.1,
+               intervals repeatCount: Float = 5 ) {
         
         let flash = CABasicAnimation(keyPath: "opacity")
-        flash.duration = 0.3
+        flash.duration = duration
         flash.fromValue = 1
         flash.toValue = 0.0
         flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         flash.autoreverses = true
-        flash.repeatCount = 10
-
+        flash.repeatCount = repeatCount
         layer.add(flash, forKey: nil)
     }
 }
+extension UIImageView {
+
+    func flash(intervalDuration duration: Double = 0.1,
+               intervals repeatCount: Float = 5 ) {
+        
+        let flash = CABasicAnimation(keyPath: "opacity")
+        flash.duration = duration
+        flash.fromValue = 1
+        flash.toValue = 0.0
+        flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        flash.autoreverses = true
+        flash.repeatCount = repeatCount
+        layer.add(flash, forKey: nil)
+    }
+}
+
+
 
 //
 // MARK: - Reset UI
@@ -834,7 +951,7 @@ extension StartVC {
         //
         // Disable evaluateButton, reset hasBeenEvaluated flag
         //
-        evaluateButton.isEnabled = false
+       // evaluateButton.isEnabled = false
         
         //
         // Set ImageViews to questionmarks
