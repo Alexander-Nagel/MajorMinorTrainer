@@ -2,14 +2,18 @@ TO DO:
 
 Bugs:
 
-- reset UI after numberOfChords has changed doesn't work!
+- OK reset UI after numberOfChords has changed doesn't work! only after switching back and fourth again. why?
+- at start, before first time the play button got hit - you shouldn't be able to chose chords, that makes no sense, must be disabled
+- small screens iphone etc.: Fix settings labels' length
 
 Necessary:
 
+- show only play button at start, flashing!
+- refactor play + repeat function into one! too much common code...
 - OK add rest of user settings to settings tab (pause between XXX in seconds...)
 - OK disable (hide?) evaluation button until all guesses are made
 - refactor / outsource StartVC.swift file, all evaluation stuff should happen in model, not in controller
-- create icons
+- OK create icons
 - create screenshots for appstore / mockups for website
 - upload to appstore
 
@@ -22,3 +26,4 @@ Optional:
 - new user setting: only diatonic chords
 - new user setting: record and add arpeggiated chords (up + down) -> make user option
 - display name (root) of chord after evaluation
+- OK new user setting: play next chord question right after results if all are correct

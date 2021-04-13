@@ -7,18 +7,23 @@
 
 import UIKit
 
+let SETTINGS_DEBUG = false
+
 class SettingsVC: UITableViewController {
 
     @IBOutlet weak var numberOfChordsLabel: UILabel!
     @IBOutlet weak var pauseBetweenChordsLabel: UILabel!
     @IBOutlet weak var pauseBetweenResultsLabel: UILabel!
+    @IBOutlet weak var startImmediatelyAfterCorrectResultLabel: UILabel!
+    
+    @IBOutlet weak var startImmediatelySwitch: UISwitch!
     
     var settingsVariable: Int = 0
     
     var numberOfChords: Int?
     {
         didSet {
-            print("Change!!! numberOfChords = \(numberOfChords)")
+            if SETTINGS_DEBUG {print("Change!!! numberOfChords = \(numberOfChords)")}
             if let noc = numberOfChords {
                 numberOfChordsLabel?.text = String(noc)
             }
@@ -27,7 +32,7 @@ class SettingsVC: UITableViewController {
     var pauseBetweenChords: Double?
     {
         didSet {
-            print("Change!!! pauseBetweenChords = \(pauseBetweenChords)")
+            if SETTINGS_DEBUG {print("Change!!! pauseBetweenChords = \(pauseBetweenChords)")}
             if let pbc = pauseBetweenChords {
                  pauseBetweenChordsLabel?.text = String(pbc)
             }
@@ -36,9 +41,18 @@ class SettingsVC: UITableViewController {
     var pauseBetweenResults: Double?
     {
         didSet {
-            print("Change!!! pauseBetweenResults = \(pauseBetweenResults)")
-            if let pbr = pauseBetweenResults {
+            if SETTINGS_DEBUG {print("Change!!! pauseBetweenResults = \(pauseBetweenResults)")}
+           if let pbr = pauseBetweenResults {
                 pauseBetweenResultsLabel?.text = String(pbr)
+           }
+        }
+    }
+    var startImmediatelyAfterCorrectResult: Bool?
+    {
+        didSet {
+            if SETTINGS_DEBUG {print("Change!!! startImmediatelyAfterCorrectResult = \(startImmediatelyAfterCorrectResult)")}
+            if let siacr = startImmediatelyAfterCorrectResult {
+                startImmediatelySwitch?.isOn = siacr
             }
         }
     }
@@ -59,9 +73,9 @@ class SettingsVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         print(#function)
-        print("inside viewDidAppear: numberOfChords = \(numberOfChords)")
-        print("inside viewDidAppear: pauseBetweenChords = \(pauseBetweenChords)")
-        print("inside viewDidAppear: pauseBetweenResults = \(pauseBetweenResults)")
+        if SETTINGS_DEBUG {print("inside viewDidAppear: numberOfChords = \(numberOfChords)")}
+        if SETTINGS_DEBUG {print("inside viewDidAppear: pauseBetweenChords = \(pauseBetweenChords)")}
+        if SETTINGS_DEBUG { print("inside viewDidAppear: pauseBetweenResults = \(pauseBetweenResults)")}
         
         if let noc = numberOfChords {
             numberOfChordsLabel?.text = String(noc)
@@ -71,6 +85,9 @@ class SettingsVC: UITableViewController {
         }
         if let pbr = pauseBetweenResults {
             pauseBetweenResultsLabel?.text = String(pbr)
+        }
+        if let siacr = startImmediatelyAfterCorrectResult {
+            startImmediatelySwitch?.isOn = siacr
         }
         
         stepper1.wraps = false
@@ -97,13 +114,11 @@ class SettingsVC: UITableViewController {
         numberOfChordsLabel.textColor = .black
         pauseBetweenChordsLabel.textColor = .black
         pauseBetweenResultsLabel.textColor = .black
-        
+        startImmediatelyAfterCorrectResultLabel.textColor = .black
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
-        
         
         //
         // Passing data back to StartVC
@@ -112,22 +127,25 @@ class SettingsVC: UITableViewController {
         let destinationVC = navController.topViewController as! StartVC
         if let noc = self.numberOfChords,
            let pbc = self.pauseBetweenChords,
-           let pbr = self.pauseBetweenResults {
+           let pbr = self.pauseBetweenResults,
+           let siacr = self.startImmediatelyAfterCorrectResult{
             destinationVC.trainer.userSettings.numberOfChords = noc
             destinationVC.trainer.userSettings.pauseBetweenChords = pbc
             destinationVC.trainer.userSettings.pauseBetweenResults = pbr
+            destinationVC.trainer.userSettings.startImmediatelyAfterCorrectResult = siacr
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         
-       
-        
-        
+        print("SettingVC is gone now! \(#function)")
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("SETTINGS")
+        if SETTINGS_DEBUG { print("SETTINGS")}
         print(#function)
         
     }
@@ -158,5 +176,15 @@ class SettingsVC: UITableViewController {
         pauseBetweenResults = round(Double(sender.value), toDigits: 1)
     
     }
+    
+    @IBAction func startImmediatelySwitch(_ sender: UISwitch) {
+        
+        if sender.isOn {
+            startImmediatelyAfterCorrectResult = true
+        } else {
+            startImmediatelyAfterCorrectResult = false
+        }
+    }
+    
     
 }

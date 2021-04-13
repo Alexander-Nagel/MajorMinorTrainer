@@ -17,6 +17,7 @@ struct UserSettings {
     var numberOfChords: Int = 3
     var pauseBetweenChords = 1.2
     var pauseBetweenResults = 0.3
+    var startImmediatelyAfterCorrectResult = false 
 }
 
 

@@ -47,7 +47,7 @@ class StartVC: UIViewController {
     @IBOutlet weak var repeatButton: UIButton!
     @IBOutlet weak var evaluateButton: UIButton!
     
-    var buttonColumns: [UIStackView]?
+    var buttonColumns: [UIStackView] = []
     var answerButtons: [UIButton] = []
     var majorButtons:  [UIButton] = []
     var minorButtons:  [UIButton] = []
@@ -59,25 +59,12 @@ class StartVC: UIViewController {
         if DEBUG {print(#function)}
         
         super.viewDidLoad()
-        
-       // let barViewControllers = self.tabBarController?.viewControllers
-        
-        //let svc = barViewControllers![1] as! UINavigationController
-        
-        //let ssvc = svc as! SettingsVC
-        //svc.myOrder = self.myOrder  //shared model
-        
     }
-   
     
     override func viewWillDisappear(_ animated: Bool) {
         
         print(#function)
-        
-       
-
-       
-        
+ 
         // https://stackoverflow.com/questions/39494454/pass-data-between-viewcontroller-and-tabbarcontroller
         
         //
@@ -88,6 +75,7 @@ class StartVC: UIViewController {
         destinationVC.numberOfChords = self.trainer.userSettings.numberOfChords
         destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
         destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
+        destinationVC.startImmediatelyAfterCorrectResult = self.trainer.userSettings.startImmediatelyAfterCorrectResult
     }
 }
 
@@ -96,7 +84,7 @@ class StartVC: UIViewController {
 //
 extension StartVC {
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         if DUMP {debugDump()}
         if DEBUG {print(#function)}
@@ -107,45 +95,9 @@ extension StartVC {
         majorButtons = [majButton1, majButton2, majButton3, majButton4, majButton5]
         minorButtons = [minButton1, minButton2, minButton3, minButton4, minButton5]
         
-        setupButtons()
-    }
-    
-    func setupButtons() {
+        // guard let evalIm = evalutationImageViews else {return}
         
-        if DUMP {debugDump()}
-        if DEBUG {print(#function)}
-        
-        guard let columns = buttonColumns, let evalIm = evalutationImageViews else {return}
-        
-        //
-        // Hide all columns
-        //
-        for index in 0...4 {
-            columns[index].isHidden = true
-            //evalIm[index].isHidden = true
-        }
-
-        //
-        // Show columns needed for test
-        //
-        let limit = (trainer.userSettings.numberOfChords - 1)
-        print("Limit: \(0...limit)")
-        for index in 0...limit {
-            columns[index].isHidden = false
-        }
-        
-        //
-        // Style buttons
-        //
-        for button in answerButtons {
-            button.layer.cornerRadius = 30
-            button.layer.borderWidth = 0
-            button.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            //button.setTitleShadowColor(.yellow, for: .selected)
-            button.setTitleColor(K.Color.selectedLabelTextColor, for: .selected)
-        }
-        
-        evaluateButton.isHidden = true
+       
         
         resetUI()
     }
@@ -808,6 +760,9 @@ extension StartVC {
         let timeToResetPlayingStatus = (Double(limit + 2) * self.trainer.userSettings.pauseBetweenResults)
         DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetPlayingStatus)) {
             self.trainer.isEvaluating = false
+            if self.trainer.userSettings.startImmediatelyAfterCorrectResult {
+                self.playPressed(self.playButton)
+            }
         }
         
         //
@@ -816,6 +771,7 @@ extension StartVC {
         evaluateButton.isEnabled = false
         evaluateButton.isHidden = true
         trainer.hasBeenEvaluated = true
+        
     }
 }
 
@@ -902,7 +858,7 @@ extension UIImageView {
 // MARK: - Reset UI
 //
 // Called everytime PLAY is pressed. And right after starting.
-// Additional one-time setup is done in setupButtons()
+// Additional one-time setup is done in viewWillAppear()
 //
 extension StartVC {
     
@@ -910,6 +866,37 @@ extension StartVC {
         
         if DEBUG {print(#function)}
         if DUMP {debugDump()}
+        
+        //
+        // Hide all columns
+        //
+        for index in 0...4 {
+            buttonColumns[index].isHidden = true
+            //evalIm[index].isHidden = true
+        }
+
+        //
+        // Show columns needed for test
+        //
+        let limit = (trainer.userSettings.numberOfChords - 1)
+        print("Limit: \(0...limit)")
+        for index in 0...limit {
+            buttonColumns[index].isHidden = false
+        }
+        
+        //
+        // Style buttons
+        //
+        for button in answerButtons {
+            button.layer.cornerRadius = 30
+            button.layer.borderWidth = 0
+            button.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            //button.setTitleShadowColor(.yellow, for: .selected)
+            button.setTitleColor(K.Color.selectedLabelTextColor, for: .selected)
+        }
+        
+        evaluateButton.isHidden = true
+        
         
         //
         // Reset buttons
@@ -939,7 +926,6 @@ extension StartVC {
             button.setTitleColor(K.Color.selectedLabelTextColor, for: .selected)
             button.setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .selected)
         }
-        
         
         //
         // Disable evaluateButton, reset hasBeenEvaluated flag
