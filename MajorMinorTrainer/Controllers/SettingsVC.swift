@@ -94,6 +94,10 @@ class SettingsVC: UITableViewController {
         stepper3.stepValue = 0.1
         stepper3.value = Double(pauseBetweenResults!)
 
+        numberOfChordsLabel.textColor = .black
+        pauseBetweenChordsLabel.textColor = .black
+        pauseBetweenResultsLabel.textColor = .black
+        
         
     }
     

@@ -88,7 +88,6 @@ class StartVC: UIViewController {
         destinationVC.numberOfChords = self.trainer.userSettings.numberOfChords
         destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
         destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
-        
     }
 }
 
@@ -96,9 +95,6 @@ class StartVC: UIViewController {
 // MARK: - Setup Buttons
 //
 extension StartVC {
-    
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -141,7 +137,6 @@ extension StartVC {
         //
         // Style buttons
         //
-        
         for button in answerButtons {
             button.layer.cornerRadius = 30
             button.layer.borderWidth = 0
@@ -234,9 +229,7 @@ extension StartVC {
                 //if arrIndex > 0 {self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor}
                 
                 arrIndex += 1
-                
             }
-           
             offset += self.trainer.userSettings.pauseBetweenChords
         }
         
