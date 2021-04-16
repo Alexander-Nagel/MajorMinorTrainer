@@ -126,7 +126,7 @@ class StartVC: UIViewController {
         let destinationVC = navController.topViewController as! SettingsVC
         destinationVC.numberOfChords = self.trainer.userSettings.numberOfChords
         destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
-        destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
+//        destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
         destinationVC.startImmediatelyAfterCorrectResult = self.trainer.userSettings.startImmediatelyAfterCorrectResult
     }
 }
@@ -370,20 +370,20 @@ extension StartVC {
                     //
                     // Reset previous imgView color
                     //
-                    self.evalutationImageViews![arrIndex-1].tintColor = oldColor
+                    //self.evalutationImageViews![arrIndex-1].tintColor = oldColor
                     
                     //
                     // Reset prevoius maj or min color to green (if it's the solution)
                     //
-                    if self.trainer.hasBeenEvaluated {
-                        if solution[arrIndex-1] == chordQuality.major {
-                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-                        } else {
-                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-                        }
-                    }
+//                    if self.trainer.hasBeenEvaluated {
+//                        if solution[arrIndex-1] == chordQuality.major {
+//                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+//                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
+//                        } else {
+//                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+//                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
+//                        }
+//                    }
                 }
                 
                 //
@@ -414,15 +414,15 @@ extension StartVC {
             }
             self.evalutationImageViews![arrIndex-1].tintColor = oldColor
            
-            if  self.trainer.hasBeenEvaluated {
-                if solution[arrIndex-1] == chordQuality.major {
-                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-                } else {
-                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-                }
-            }
+//            if  self.trainer.hasBeenEvaluated {
+//                if solution[arrIndex-1] == chordQuality.major {
+//                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+//                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
+//                } else {
+//                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+//                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
+//                }
+//            }
             
             self.trainer.isPlaying = false
         }
@@ -850,8 +850,14 @@ extension StartVC {
         let timeToResetPlayingStatus = (Double(limit + 2) * self.trainer.userSettings.pauseBetweenResults)
         DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetPlayingStatus)) {
             self.trainer.isEvaluating = false
-            if self.trainer.userSettings.startImmediatelyAfterCorrectResult {
-                self.playPressed(self.playButton)
+            
+            //
+            // restart if all answer are correct and startImmediatelyAfterCorrectResult is set
+            //
+            if self.trainer.solution == self.trainer.answer {
+                if self.trainer.userSettings.startImmediatelyAfterCorrectResult {
+                    self.playPressed(self.playButton)
+                }
             }
         }
         
@@ -1004,7 +1010,7 @@ extension StartVC {
         //
         for iv in xMarkImageViews {
             iv.isHidden = true
-            iv.alpha = 0.5
+            iv.alpha = 0.7
         }
         
         
@@ -1022,7 +1028,7 @@ extension StartVC {
             //button.setTitle("Major", for: .normal)
             button.setTitle("", for: .normal)
 
-            button.setTitle("selected", for: .selected)
+            button.setTitle("", for: .selected)
         }
         for button in minorButtons {
             //button.backgroundColor = K.Color.minorButtonColor
@@ -1030,7 +1036,7 @@ extension StartVC {
            // button.setTitle("Minor", for: .normal)
             button.setTitle("", for: .normal)
 
-            button.setTitle("selected", for: .selected)
+            button.setTitle("", for: .selected)
         }
         
         

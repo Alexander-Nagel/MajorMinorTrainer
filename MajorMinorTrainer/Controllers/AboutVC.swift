@@ -17,7 +17,8 @@ class AboutVC: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = K.Color.backgroundColor
-        imageView.image = UIImage(named:  "launchScreenImage") 
+        //imageView.image = UIImage(named:  "launchScreenImage")
+    
         
         
     }

@@ -40,6 +40,9 @@ struct K {
         
         static let selectedLabelBgColor: UIColor = .orange
         static let selectedLabelTextColor: UIColor = .white
+        
+        static let settingsTextColor: UIColor = .white
+        static let settingsCellColor = UIColor(rgb: 0xCCE3dE) // Light Cyan
     }
     
     struct Sound {
