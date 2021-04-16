@@ -26,16 +26,20 @@ struct K {
         static let minorButtonColor = UIColor(rgb: 0xA4C3B2) // Cambridge Blue
         static let minorButtonTextColor: UIColor = .black
         
-        static let buttonTextColor: UIColor = .black
+        static let buttonTextColor: UIColor = .white
+        static let correctButNotChosenButtonTextColor: UIColor = #colorLiteral(red: 0.3251720667, green: 0.8431780338, blue: 0.411704123, alpha: 1)
+        static let wrongButNotChosenButtonTextColor: UIColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
+        static let wrongChosenButtonTextColor: UIColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
         
-        static let rightAnswerColor: UIColor = .green
-        static let wrongAnswerColor: UIColor = .red
+        static let chosenRightAnswerColor: UIColor = #colorLiteral(red: 0.3251720667, green: 0.8431780338, blue: 0.411704123, alpha: 1)
+        static let notChosenRightAnswerBGColor: UIColor = #colorLiteral(red: 0.225044248, green: 0.5792186429, blue: 0.2905635965, alpha: 1)
+        static let wrongAnswerColor: UIColor = #colorLiteral(red: 0.9921812415, green: 0.1882499158, blue: 0.2627539337, alpha: 1)
         
         static let questionMarkColor: UIColor = .white
         static let questionMarkPlayingColor: UIColor = .black
         
         static let selectedLabelBgColor: UIColor = .orange
-        static let selectedLabelTextColor: UIColor = .black
+        static let selectedLabelTextColor: UIColor = .white
     }
     
     struct Sound {

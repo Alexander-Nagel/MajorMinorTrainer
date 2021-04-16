@@ -21,9 +21,9 @@ Necessary:
 Optional:
 
 - OK flash/re-color playing (green) chord button (not only question mark!) when re-playing sequence after evaluation
-- loudspeaker icons after evaluation to listen to every chord
+- OK loudspeaker icons after evaluation to listen to every chord
 - add data persistence to store results
 - new user setting: only diatonic chords
 - new user setting: record and add arpeggiated chords (up + down) -> make user option
-- display name (root) of chord after evaluation
+- OK display name (root) of chord after evaluation
 - OK new user setting: play next chord question right after results if all are correct

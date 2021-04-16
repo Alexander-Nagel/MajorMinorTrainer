@@ -129,6 +129,7 @@
 				FA217C5A261C6BAD009EFECD /* etc. */,
 				FA217C4E261C5080009EFECD /* Info.plist */,
 				FA03000C2621DC5B00909D28 /* to_do.txt */,
+				FA217C49261C5080009EFECD /* Assets.xcassets */,
 			);
 			path = MajorMinorTrainer;
 			sourceTree = "<group>";
@@ -136,6 +137,7 @@
 		FA217C57261C6B8B009EFECD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA217C4B261C5080009EFECD /* LaunchScreen.storyboard */,
 				FA217C43261C5060009EFECD /* Main.storyboard */,
 			);
 			path = Views;
@@ -164,8 +166,6 @@
 		FA217C5A261C6BAD009EFECD /* etc. */ = {
 			isa = PBXGroup;
 			children = (
-				FA217C4B261C5080009EFECD /* LaunchScreen.storyboard */,
-				FA217C49261C5080009EFECD /* Assets.xcassets */,
 				FA217C3D261C5060009EFECD /* AppDelegate.swift */,
 				FA217C3F261C5060009EFECD /* SceneDelegate.swift */,
 			);

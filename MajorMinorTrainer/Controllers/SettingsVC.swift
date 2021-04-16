@@ -145,8 +145,9 @@ class SettingsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if SETTINGS_DEBUG { print("SETTINGS")}
-        print(#function)
+        self.view.backgroundColor = K.Color.backgroundColor
+        tableView.backgroundColor = K.Color.backgroundColor
+        
         
     }
     
@@ -155,6 +156,7 @@ class SettingsVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
+
 
   
     @IBOutlet weak var stepper1: UIStepper!

@@ -21,27 +21,75 @@ class StartVC: UIViewController {
 
     let trainer = Trainer()
     
+    @IBOutlet weak var hiddenLabel: UILabel!
+    @IBOutlet weak var majorLabel: UILabel!
+    @IBOutlet weak var minorLabel: UILabel!
+
+    // ROW 1
+    
     @IBOutlet weak var evalImage1: UIImageView!
-    @IBOutlet weak var evalImage2: UIImageView!
-    @IBOutlet weak var evalImage3: UIImageView!
-    @IBOutlet weak var evalImage4: UIImageView!
-    @IBOutlet weak var evalImage5: UIImageView!
+    
     @IBOutlet weak var majButton1: UIButton!
+    @IBOutlet weak var xMarkMaj1: UIImageView!
+    @IBOutlet weak var playMaj1: UIImageView!
+    
     @IBOutlet weak var minButton1: UIButton!
+    @IBOutlet weak var xMarkMin1: UIImageView!
+    @IBOutlet weak var playMin1: UIImageView!
+
+    // ROW 2
+    
+    @IBOutlet weak var evalImage2: UIImageView!
+
     @IBOutlet weak var majButton2: UIButton!
+    @IBOutlet weak var xMarkMaj2: UIImageView!
+    @IBOutlet weak var playMaj2: UIImageView!
+
     @IBOutlet weak var minButton2: UIButton!
+    @IBOutlet weak var xMarkMin2: UIImageView!
+    @IBOutlet weak var playMin2: UIImageView!
+
+    // ROW 3
+
+    @IBOutlet weak var evalImage3: UIImageView!
+    
     @IBOutlet weak var majButton3: UIButton!
+    @IBOutlet weak var xMarkMaj3: UIImageView!
+    @IBOutlet weak var playMaj3: UIImageView!
+
     @IBOutlet weak var minButton3: UIButton!
+    @IBOutlet weak var xMarkMin3: UIImageView!
+    @IBOutlet weak var playMin3: UIImageView!
+
+    // ROW 4
+    
+    @IBOutlet weak var evalImage4: UIImageView!
+   
     @IBOutlet weak var majButton4: UIButton!
+    @IBOutlet weak var xMarkMaj4: UIImageView!
+    @IBOutlet weak var playMaj4: UIImageView!
+
     @IBOutlet weak var minButton4: UIButton!
+    @IBOutlet weak var xMarkMin4: UIImageView!
+    @IBOutlet weak var playMin4: UIImageView!
+
+    // ROW 5
+    
+    @IBOutlet weak var evalImage5: UIImageView!
+   
     @IBOutlet weak var majButton5: UIButton!
+    @IBOutlet weak var xMarkMaj5: UIImageView!
+    @IBOutlet weak var playMaj5: UIImageView!
+    
     @IBOutlet weak var minButton5: UIButton!
+    @IBOutlet weak var xMarkMin5: UIImageView!
+    @IBOutlet weak var playMin5: UIImageView!
+
     @IBOutlet weak var buttonColumn1: UIStackView!
     @IBOutlet weak var buttonColumn2: UIStackView!
     @IBOutlet weak var buttonColumn3: UIStackView!
     @IBOutlet weak var buttonColumn4: UIStackView!
     @IBOutlet weak var buttonColumn5: UIStackView!
-    
     
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var repeatButton: UIButton!
@@ -51,6 +99,10 @@ class StartVC: UIViewController {
     var answerButtons: [UIButton] = []
     var majorButtons:  [UIButton] = []
     var minorButtons:  [UIButton] = []
+    var xMarkImageViews:  [UIImageView] = []
+    var xMarkMajImageViews:  [UIImageView] = []
+    var xMarkMinImageViews:  [UIImageView] = []
+    var playImageViews: [UIImageView] = []
     var evalutationImageViews: [UIImageView]?
     
     override func viewDidLoad() {
@@ -94,6 +146,10 @@ extension StartVC {
         evalutationImageViews = [evalImage1, evalImage2, evalImage3, evalImage4, evalImage5]
         majorButtons = [majButton1, majButton2, majButton3, majButton4, majButton5]
         minorButtons = [minButton1, minButton2, minButton3, minButton4, minButton5]
+        xMarkImageViews = [xMarkMaj1, xMarkMin1, xMarkMaj2, xMarkMin2, xMarkMaj3, xMarkMin3, xMarkMaj4, xMarkMin4, xMarkMaj5, xMarkMin5]
+        xMarkMajImageViews = [xMarkMaj1, xMarkMaj2, xMarkMaj3, xMarkMaj4, xMarkMaj5]
+        xMarkMinImageViews = [xMarkMin1, xMarkMin2, xMarkMin3, xMarkMin4, xMarkMin5]
+        playImageViews = [playMaj1, playMin1, playMaj2, playMin2, playMaj3, playMin3, playMaj4, playMin4, playMaj5, playMin5]
         
         // guard let evalIm = evalutationImageViews else {return}
         
@@ -302,7 +358,7 @@ extension StartVC {
                     switch criteria {
                     case "green":
                         // print("\(arrIndex) it's green")
-                        oldColor = K.Color.rightAnswerColor
+                        oldColor = K.Color.chosenRightAnswerColor
                     case "red":
                         //print("\(arrIndex) it's red")
                         oldColor = K.Color.wrongAnswerColor
@@ -321,11 +377,11 @@ extension StartVC {
                     //
                     if self.trainer.hasBeenEvaluated {
                         if solution[arrIndex-1] == chordQuality.major {
-                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
-                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
                         } else {
-                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
-                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
                         }
                     }
                 }
@@ -348,7 +404,7 @@ extension StartVC {
             switch criteria {
             case "green":
                 print("\(arrIndex) it's green")
-                oldColor = K.Color.rightAnswerColor
+                oldColor = K.Color.chosenRightAnswerColor
             case "red":
                 print("\(arrIndex) it's red")
                 oldColor = K.Color.wrongAnswerColor
@@ -360,11 +416,11 @@ extension StartVC {
            
             if  self.trainer.hasBeenEvaluated {
                 if solution[arrIndex-1] == chordQuality.major {
-                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
-                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
                 } else {
-                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
-                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
                 }
             }
             
@@ -551,34 +607,34 @@ extension StartVC {
             switch tag {
             case 1:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[0])!) + "_maj")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[0])!) + "_maj")
             case 2:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[0])!) + "_min")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[0])!) + "_min")
             case 3:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[1])!) + "_maj")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[1])!) + "_maj")
             case 4:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[1])!) + "_min")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[1])!) + "_min")
             case 5:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[2])!) + "_maj")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[2])!) + "_maj")
             case 6:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[2])!) + "_min")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[2])!) + "_min")
             case 7:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[3])!) + "_maj")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[3])!) + "_maj")
             case 8:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[3])!) + "_min")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[3])!) + "_min")
             case 9:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[4])!) + "_maj")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[4])!) + "_maj")
             case 10:
                 
-                playSound(filename: getChordName(str: (trainer.sequence?[4])!) + "_min")
+                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[4])!) + "_min")
             default:
                 showAlert("This shouldn't have happened at all.")
             }
@@ -644,6 +700,15 @@ extension StartVC {
                     
                     let answer = self.trainer.answer[index]
                     
+                    //
+                    // Extract current Root and Chord Quality from filename
+                    //
+                    let chordRoot = self.getChordNameFromFileName(fileName: self.trainer.sequence?[index] ?? "")
+                    var chordQual = self.getChordQualityFromFileName(fileName: self.trainer.sequence?[index] ?? "")
+                    //print("root = \(chordRoot)")
+                    //print("qual = \(chordQuality)")
+                    chordQual = chordQual == "maj" ? "": "m"
+                    
                     if answer == solution {
                         
                         //
@@ -660,18 +725,26 @@ extension StartVC {
                         // color correct button's text green and display "Right!" text
                         //
                         var buttonToColorGreen: UIButton?
+                        var wrongButNotChosenButton: UIButton?
                         var qual: String = ""
                         
                         if solution == chordQuality.major {
                             buttonToColorGreen = self.majorButtons[index]
+                            wrongButNotChosenButton = self.minorButtons[index]
                             qual = "Major"
+                            wrongButNotChosenButton?.setTitle("\(chordRoot)m", for: .normal)
                         } else if solution == chordQuality.minor {
                             buttonToColorGreen = self.minorButtons[index]
+                            wrongButNotChosenButton = self.majorButtons[index]
                             qual = "Minor"
+                            wrongButNotChosenButton?.setTitle("\(chordRoot)", for: .normal)
                         }
                         
-                        buttonToColorGreen?.setBackgroundColor(color: K.Color.rightAnswerColor, forState: .selected)
-                        buttonToColorGreen?.setTitle("Right! " + qual, for: .selected)
+                        buttonToColorGreen?.setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
+                        buttonToColorGreen?.setTitle("\(chordRoot)\(chordQual)", for: .selected)
+                        wrongButNotChosenButton?.setTitleColor(K.Color.wrongButNotChosenButtonTextColor, for: .normal)
+
+                       
                         
                         //
                         // play success sound
@@ -717,18 +790,31 @@ extension StartVC {
                             rightQual = "Minor"
                             wrongQual = "Major"
                         }
+
                         
                         //
-                        // Mark selected wrong button
+                        // Mark unselected button as right
                         //
-                        buttonToColorGreen?.setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
-                        buttonToColorGreen?.setTitle("Correct answer: " + rightQual, for: .normal)
+                        //buttonToColorGreen?.setBackgroundColor(color: K.Color.rightAnswerColor, forState: .normal)
+                        buttonToColorGreen?.setTitle("\(chordRoot)\(chordQual)", for: .normal)
+                        buttonToColorGreen?.setTitleColor(K.Color.correctButNotChosenButtonTextColor, for: .normal)
+                        buttonToColorGreen?.setBackgroundColor(color: K.Color.notChosenRightAnswerBGColor, forState: .normal)
                         
                         //
-                        // Mark unselected right button
+                        // Mark selected button as wrong
                         //
                         buttonToColorRed?.setBackgroundColor(color: K.Color.wrongAnswerColor, forState: .selected)
-                        buttonToColorRed?.setTitle("Wrong choice: " + wrongQual, for: .selected)
+                        //buttonToColorRed?.setTitle("Wrong choice: " + wrongQual, for: .selected)
+                        if chordQual == "" {
+                            // if maj is right, mark min button as wrong
+                            self.xMarkMinImageViews[index].isHidden = false
+                            buttonToColorRed?.setTitle("\(chordRoot)m", for: .selected)
+                        } else {
+                            // if min is right, mark maj button as wrong
+                            self.xMarkMajImageViews[index].isHidden = false
+                            buttonToColorRed?.setTitle("\(chordRoot)", for: .selected)
+
+                        }
                         
                         //
                         // play failure sound
@@ -740,6 +826,10 @@ extension StartVC {
                         //
                         self.trainer.imgColors.append("red")
                         
+                    }
+                    
+                    for iv in self.playImageViews {
+                        iv.isHidden = false
                     }
                     
                     
@@ -888,12 +978,37 @@ extension StartVC {
         // Style buttons
         //
         for button in answerButtons {
-            button.layer.cornerRadius = 30
+            button.layer.cornerRadius = 15
             button.layer.borderWidth = 0
             button.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             //button.setTitleShadowColor(.yellow, for: .selected)
             button.setTitleColor(K.Color.selectedLabelTextColor, for: .selected)
+            button.setTitleColor(K.Color.buttonTextColor, for: .normal)
         }
+        
+       // majorLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / CGFloat( 180 / -90))
+       //majorLabel.backgroundColor = K.Color.majorButtonColor
+       
+        //minorLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / CGFloat( 180 / -90))
+       // minorLabel.backgroundColor = K.Color.minorButtonColor
+        
+        //
+        // Hide all playButtons
+        //
+        for iv in playImageViews {
+            iv.isHidden = true
+        }
+        
+        //
+        // Hide all xmarks
+        //
+        for iv in xMarkImageViews {
+            iv.isHidden = true
+            iv.alpha = 0.5
+        }
+        
+        
+        
         
         evaluateButton.isHidden = true
         
@@ -904,24 +1019,28 @@ extension StartVC {
         for button in majorButtons {
             //button.backgroundColor = K.Color.majorButtonColor
             button.setBackgroundColor(color: K.Color.majorButtonColor, forState: .normal)
-            button.setTitle("Major", for: .normal)
-            button.setTitle("Your guess: Major", for: .selected)
+            //button.setTitle("Major", for: .normal)
+            button.setTitle("", for: .normal)
+
+            button.setTitle("selected", for: .selected)
         }
         for button in minorButtons {
             //button.backgroundColor = K.Color.minorButtonColor
             button.setBackgroundColor(color: K.Color.minorButtonColor, forState: .normal)
-            button.setTitle("Minor", for: .normal)
-            button.setTitle("Your guess: Minor", for: .selected)
+           // button.setTitle("Minor", for: .normal)
+            button.setTitle("", for: .normal)
+
+            button.setTitle("selected", for: .selected)
         }
         
         
         for button in answerButtons {
             button.isSelected = false
             button.titleLabel?.textAlignment = .center
-            button.titleLabel?.numberOfLines = 3
+            button.titleLabel?.numberOfLines = 1
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.titleLabel?.lineBreakMode = .byClipping
-            button.titleLabel?.font = UIFont(name: "Helvetica", size:16)
+            //button.titleLabel?.font = UIFont(name: "Helvetica", size:16)
             button.setTitleColor(K.Color.buttonTextColor, for: .normal)
             button.setTitleColor(K.Color.selectedLabelTextColor, for: .selected)
             button.setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .selected)
@@ -975,15 +1094,28 @@ extension StartVC {
 
 extension StartVC {
     
-    func getChordName(str: String) -> String {
+    func getChordNameFromFileName(fileName: String) -> String {
         
         print()
         var result = ""
-        if let index = str.firstIndex(of: "_") {
-            result = String(str.prefix(upTo: index))
-            print("Chordname = \(result)")
+        if let index = fileName.firstIndex(of: "_") {
+            result = String(fileName.prefix(upTo: index))
+            //print("Chordname = \(result)")
             return result
         }
         return result
     }
+    
+    func getChordQualityFromFileName(fileName: String) -> String {
+        
+        print()
+        var result = ""
+        if let index = fileName.firstIndex(of: "_") {
+            result = String(fileName.suffix(from: index))
+            //print("Chordquality = \(result)")
+            return String(result.dropFirst())
+        }
+        return result
+    }
+    
 }
