@@ -897,7 +897,7 @@
                                                         <constraint firstAttribute="width" constant="50" id="m3Y-ui-Pqh"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chords" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cts-x4-jP0">
@@ -1064,10 +1064,15 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="cyx-wr-0iy"/>
                     <connections>
-                        <outlet property="numberOfChordsLabel" destination="z5D-8i-5S0" id="FWk-17-bpY"/>
-                        <outlet property="pauseBetweenChordsLabel" destination="LqS-t5-aOF" id="lhU-W5-U5c"/>
-                        <outlet property="startImmediatelyAfterCorrectResultLabel" destination="5s9-HK-Xe6" id="rVd-fG-9dt"/>
-                        <outlet property="startImmediatelySwitch" destination="G4g-OB-IaY" id="pIx-xo-jvo"/>
+                        <outlet property="autoRestartDetailsLabel" destination="fRI-G7-oFf" id="chW-1F-9Cf"/>
+                        <outlet property="autoRestartLabel" destination="5s9-HK-Xe6" id="rVd-fG-9dt"/>
+                        <outlet property="autoRestartSwitch" destination="G4g-OB-IaY" id="pIx-xo-jvo"/>
+                        <outlet property="numberOfChordsDetailsLabel" destination="PJ2-Ei-iqr" id="4PB-mu-Kca"/>
+                        <outlet property="numberOfChordsDiplay" destination="z5D-8i-5S0" id="FWk-17-bpY"/>
+                        <outlet property="numberOfChordsLabel" destination="cts-x4-jP0" id="ZCQ-sQ-T02"/>
+                        <outlet property="pauseBetweenChordsDetailsLabel" destination="uGA-aH-HCn" id="Gj0-V8-eHo"/>
+                        <outlet property="pauseBetweenChordsDiplay" destination="LqS-t5-aOF" id="lhU-W5-U5c"/>
+                        <outlet property="pauseBetweenChordsLabel" destination="6W3-8j-gsr" id="Ig4-ms-mbb"/>
                         <outlet property="stepper1" destination="uLf-MP-Qzz" id="Cu2-aZ-DrG"/>
                         <outlet property="stepper2" destination="h6D-3V-WNV" id="1gO-Sn-edo"/>
                     </connections>
@@ -1091,7 +1096,7 @@
             <color red="0.41999998688697815" green="0.56499999761581421" blue="0.50199997425079346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="customMinorButtonColor">
-            <color red="0.64300000667572021" green="0.76499998569488525" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.64313725490196072" green="0.76470588235294112" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

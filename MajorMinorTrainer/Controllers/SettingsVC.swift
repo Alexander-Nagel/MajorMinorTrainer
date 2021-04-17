@@ -11,12 +11,22 @@ let SETTINGS_DEBUG = false
 
 class SettingsVC: UITableViewController {
 
-    @IBOutlet weak var numberOfChordsLabel: UILabel!
-    @IBOutlet weak var pauseBetweenChordsLabel: UILabel!
-//    @IBOutlet weak var pauseBetweenResultsLabel: UILabel!
-    @IBOutlet weak var startImmediatelyAfterCorrectResultLabel: UILabel!
     
-    @IBOutlet weak var startImmediatelySwitch: UISwitch!
+    @IBOutlet weak var numberOfChordsLabel: UILabel!
+    @IBOutlet weak var numberOfChordsDiplay: UILabel!
+    @IBOutlet weak var numberOfChordsDetailsLabel: UILabel!
+    
+    @IBOutlet weak var pauseBetweenChordsLabel: UILabel!
+    @IBOutlet weak var pauseBetweenChordsDiplay: UILabel!
+    @IBOutlet weak var pauseBetweenChordsDetailsLabel: UILabel!
+//    @IBOutlet weak var pauseBetweenResultsLabel: UILabel!
+    
+    @IBOutlet weak var autoRestartLabel: UILabel!
+    @IBOutlet weak var autoRestartSwitch: UISwitch!
+    
+    @IBOutlet weak var autoRestartDetailsLabel: UILabel!
+    
+    var labels: [UILabel] = []
     
     var settingsVariable: Int = 0
     
@@ -25,7 +35,7 @@ class SettingsVC: UITableViewController {
         didSet {
             if SETTINGS_DEBUG {print("Change!!! numberOfChords = \(numberOfChords)")}
             if let noc = numberOfChords {
-                numberOfChordsLabel?.text = String(noc)
+                numberOfChordsDiplay?.text = String(noc)
             }
         }
     }
@@ -34,7 +44,7 @@ class SettingsVC: UITableViewController {
         didSet {
             if SETTINGS_DEBUG {print("Change!!! pauseBetweenChords = \(pauseBetweenChords)")}
             if let pbc = pauseBetweenChords {
-                 pauseBetweenChordsLabel?.text = String(pbc)
+                 pauseBetweenChordsDiplay?.text = String(pbc)
             }
         }
     }
@@ -52,7 +62,7 @@ class SettingsVC: UITableViewController {
         didSet {
             if SETTINGS_DEBUG {print("Change!!! startImmediatelyAfterCorrectResult = \(startImmediatelyAfterCorrectResult)")}
             if let siacr = startImmediatelyAfterCorrectResult {
-                startImmediatelySwitch?.isOn = siacr
+                autoRestartSwitch?.isOn = siacr
             }
         }
     }
@@ -68,26 +78,26 @@ class SettingsVC: UITableViewController {
     }*/
     
     override func viewWillAppear(_ animated: Bool) {
-        print(#function)
+       // print(#function)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print(#function)
+       // print(#function)
         if SETTINGS_DEBUG {print("inside viewDidAppear: numberOfChords = \(numberOfChords)")}
         if SETTINGS_DEBUG {print("inside viewDidAppear: pauseBetweenChords = \(pauseBetweenChords)")}
 //        if SETTINGS_DEBUG { print("inside viewDidAppear: pauseBetweenResults = \(pauseBetweenResults)")}
         
         if let noc = numberOfChords {
-            numberOfChordsLabel?.text = String(noc)
+            numberOfChordsDiplay?.text = String(noc)
         }
         if let pbc = pauseBetweenChords {
-            pauseBetweenChordsLabel?.text = String(pbc)
+            pauseBetweenChordsDiplay?.text = String(pbc)
         }
 //        if let pbr = pauseBetweenResults {
 //            pauseBetweenResultsLabel?.text = String(pbr)
 //        }
         if let siacr = startImmediatelyAfterCorrectResult {
-            startImmediatelySwitch?.isOn = siacr
+            autoRestartSwitch?.isOn = siacr
         }
         
         stepper1.wraps = false
@@ -111,10 +121,14 @@ class SettingsVC: UITableViewController {
 //        stepper3.stepValue = 0.1
 //        stepper3.value = Double(pauseBetweenResults!)
 
-        numberOfChordsLabel.textColor = .black
-        pauseBetweenChordsLabel.textColor = .black
+        for label in labels {
+            label.textColor = UIColor(named: "customSettingsTextColor")
+        }
+        //numberOfChordsLabel.textColor = UIColor(named: "customSettingsTextColor")
+       // pauseBetweenChordsLabel.textColor = .black
 //        pauseBetweenResultsLabel.textColor = .black
-        startImmediatelyAfterCorrectResultLabel.textColor = .black
+       // startImmediatelyAfterCorrectResultLabel.textColor = .black
+        
         
     }
     
@@ -145,8 +159,10 @@ class SettingsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = K.Color.backgroundColor
+        //self.view.backgroundColor = K.Color.backgroundColor
         tableView.backgroundColor = K.Color.backgroundColor
+        
+        labels = [numberOfChordsLabel, numberOfChordsDiplay, numberOfChordsDetailsLabel, pauseBetweenChordsLabel, pauseBetweenChordsDiplay, pauseBetweenChordsDetailsLabel, autoRestartLabel, autoRestartDetailsLabel]
         
         
     }
@@ -166,7 +182,9 @@ class SettingsVC: UITableViewController {
     //
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = K.Color.settingsCellColor
-        cell.textLabel?.textColor = K.Color.settingsTextColor
+       // cell.textLabel?.textColor = K.Color.chosenRightAnswerColor
+        //cell.textLabel?.textColor = .orange
+        //cell.textLabel?.textColor = .orange //K.Color.settingsTextColor
     }
     
 
