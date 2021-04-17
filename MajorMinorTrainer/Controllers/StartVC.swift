@@ -128,6 +128,11 @@ class StartVC: UIViewController {
         destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
 //        destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
         destinationVC.startImmediatelyAfterCorrectResult = self.trainer.userSettings.startImmediatelyAfterCorrectResult
+        
+        trainer.sequence = []
+        
+        
+        
     }
 }
 
@@ -153,8 +158,10 @@ extension StartVC {
         
         // guard let evalIm = evalutationImageViews else {return}
         
-       
+        playButton.flash(intervalDuration: 0.1, intervals: 20)
         
+        trainer.beforeFirstRun = true
+        trainer.hasBeenEvaluated = false
         resetUI()
     }
 }
@@ -178,7 +185,7 @@ extension StartVC {
             print("wait till playing is over")
             return
         }
-       
+        
         //
         // Reset buttons + imageViews
         //
@@ -248,6 +255,8 @@ extension StartVC {
             //self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor
             
             self.trainer.isPlaying = false
+            self.trainer.beforeFirstRun = false
+            self.repeatButton.isHidden = false
         }
         
         print("is playing? \(trainer.isPlaying)")
@@ -399,20 +408,20 @@ extension StartVC {
         // Set last questionmark back to white color
         //
         DispatchQueue.main.asyncAfter(deadline: (.now() + offset)) {
-            var oldColor = UIColor()
-            let criteria = self.trainer.imgColors[arrIndex-1]
-            switch criteria {
-            case "green":
-                print("\(arrIndex) it's green")
-                oldColor = K.Color.chosenRightAnswerColor
-            case "red":
-                print("\(arrIndex) it's red")
-                oldColor = K.Color.wrongAnswerColor
-            default:
-                print("\(arrIndex) it's black")
-                oldColor = K.Color.questionMarkColor
-            }
-            self.evalutationImageViews![arrIndex-1].tintColor = oldColor
+//            var oldColor = UIColor()
+//            let criteria = self.trainer.imgColors[arrIndex-1]
+//            switch criteria {
+//            case "green":
+//                print("\(arrIndex) it's green")
+//                oldColor = K.Color.chosenRightAnswerColor
+//            case "red":
+//                print("\(arrIndex) it's red")
+//                oldColor = K.Color.wrongAnswerColor
+//            default:
+//                print("\(arrIndex) it's black")
+//                oldColor = K.Color.questionMarkColor
+//            }
+//            self.evalutationImageViews![arrIndex-1].tintColor = oldColor
            
 //            if  self.trainer.hasBeenEvaluated {
 //                if solution[arrIndex-1] == chordQuality.major {
@@ -513,6 +522,13 @@ extension StartVC {
         guard !trainer.isEvaluating else {
             print("wait until evaluation is over!")
             return
+        }
+        
+        guard trainer.sequence?.count != 0 else {
+            
+            playButton.flash(intervalDuration: 0.1, intervals: 20)
+            return
+            
         }
         
 //        guard !trainer.hasBeenEvaluated else {
@@ -963,6 +979,11 @@ extension StartVC {
         if DEBUG {print(#function)}
         if DUMP {debugDump()}
         
+        if trainer.beforeFirstRun == true {
+            repeatButton.isHidden = true
+        }
+        
+        
         //
         // Hide all columns
         //
@@ -1010,7 +1031,7 @@ extension StartVC {
         //
         for iv in xMarkImageViews {
             iv.isHidden = true
-            iv.alpha = 0.7
+            iv.alpha = 0.5
         }
         
         

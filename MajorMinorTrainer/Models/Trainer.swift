@@ -34,6 +34,7 @@ class Trainer {
     var isPlaying = false
     var isEvaluating = false
     var hasBeenEvaluated = false
+    var beforeFirstRun = true
     
     
     let majorChords = ["C_maj", "C#_maj", "D_maj", "D#_maj", "E_maj", "F_maj", "F#_maj", "G_maj", "G#_maj", "A_maj", "A#_maj", "B_maj"]
