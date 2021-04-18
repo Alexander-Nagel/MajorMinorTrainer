@@ -55,6 +55,8 @@ struct K {
         static let failureImage = "multiply"
         static let questionImage = "questionmark"
     }
+    
+
 }
 
 

@@ -111,6 +111,8 @@ class StartVC: UIViewController {
         if DEBUG {print(#function)}
         
         super.viewDidLoad()
+        
+        for index in 1...6 {print(index.toRoman())}
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -1031,14 +1033,10 @@ extension StartVC {
         //
         for iv in xMarkImageViews {
             iv.isHidden = true
-            iv.alpha = 0.5
+            iv.alpha = 0.75
         }
         
-        
-        
-        
         evaluateButton.isHidden = true
-        
         
         //
         // Reset buttons
@@ -1143,6 +1141,33 @@ extension StartVC {
             return String(result.dropFirst())
         }
         return result
+    }
+    
+}
+
+extension Int {
+    
+    func toRoman() -> String {
+        
+        var romanNumber = ""
+        switch self {
+        case 1:
+            romanNumber = "I"
+        case 2:
+            romanNumber = "II"
+        case 3:
+            romanNumber = "III"
+        case 4:
+            romanNumber = "IV"
+        case 5:
+            romanNumber = "V"
+        case 6:
+            romanNumber = "VI"
+        default:
+            romanNumber = ""
+        }
+        
+        return romanNumber
     }
     
 }

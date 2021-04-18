@@ -29,6 +29,7 @@ class Trainer {
     //var pauseBetweenChords = 1.1
     //var pauseBetweenResults = 0.6
     var sequence: [String]? = []
+    var sequenceRomanNumerals: [String?] = []
     var solution: [chordQuality]? = []
     var answer: [chordQuality] = []
     var imgColors: [String] = []
@@ -39,6 +40,7 @@ class Trainer {
     //var diatonicMode = false
     var repeatingChords = false
     var uniqueChords = false
+    var key: String? = ""
     
     
     let majorChords = ["C_maj", "C#_maj", "D_maj", "D#_maj", "E_maj", "F_maj", "F#_maj", "G_maj", "G#_maj", "A_maj", "A#_maj", "B_maj"]
@@ -69,12 +71,14 @@ class Trainer {
     func createSequence(){
 
         sequence = []
+        sequenceRomanNumerals = []
         solution = []
         answer = Array(repeating: chordQuality.undefined, count: userSettings.numberOfChords)
         imgColors = Array(repeating: "white", count: userSettings.numberOfChords)
         //imgColors = []
         hasBeenEvaluated = false
         isPlaying = true
+        key = ""
         
         if !userSettings.diatonicMode {
             //
@@ -108,6 +112,7 @@ class Trainer {
             
             let randomKey = diatonicChords[Int.random(in: 0...11)]
             print(randomKey)
+            key = randomKey.first
             
             for index in 1...userSettings.numberOfChords {
                 
@@ -146,6 +151,7 @@ class Trainer {
                 // Append found chord to test sequence
                 //
                 sequence?.append(randomDiatonicChord)
+                sequenceRomanNumerals?.append()
                 
                 //
                 // save chord quality (major or minor)
