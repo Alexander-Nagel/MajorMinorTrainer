@@ -17,7 +17,8 @@ struct UserSettings {
     var numberOfChords: Int = 3
     var pauseBetweenChords = 1.2
     var pauseBetweenResults = 0.3
-    var startImmediatelyAfterCorrectResult = false 
+    var startImmediatelyAfterCorrectResult = false
+    var diatonicMode = false
 }
 
 
@@ -35,7 +36,7 @@ class Trainer {
     var isEvaluating = false
     var hasBeenEvaluated = false
     var beforeFirstRun = true
-    var diatonicMode = false
+    //var diatonicMode = false
     var repeatingChords = false
     var uniqueChords = false
     
@@ -75,7 +76,7 @@ class Trainer {
         hasBeenEvaluated = false
         isPlaying = true
         
-        if !diatonicMode {
+        if !userSettings.diatonicMode {
             //
             // default chromatic mode
             //

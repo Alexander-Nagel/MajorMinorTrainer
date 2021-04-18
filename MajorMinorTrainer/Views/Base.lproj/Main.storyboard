@@ -1054,6 +1054,57 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hlx-ha-km9" userLabel="Diatonic Mode">
+                                        <rect key="frame" x="0.0" y="316.5" width="320" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hlx-ha-km9" id="jY1-4H-eus">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diatonic Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dEH-IR-oVG">
+                                                    <rect key="frame" x="36" y="19.5" width="110" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iOy-Ii-byg">
+                                                    <rect key="frame" x="251" y="14.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="diatonicModeSwitch:" destination="VzD-xV-znU" eventType="valueChanged" id="dZE-yn-6Z0"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="iOy-Ii-byg" secondAttribute="trailing" constant="20" id="US0-VI-GmV"/>
+                                                <constraint firstItem="dEH-IR-oVG" firstAttribute="leading" secondItem="jY1-4H-eus" secondAttribute="leadingMargin" constant="20" id="abr-X1-zCo"/>
+                                                <constraint firstItem="iOy-Ii-byg" firstAttribute="centerY" secondItem="jY1-4H-eus" secondAttribute="centerY" id="eH1-y8-cWO"/>
+                                                <constraint firstItem="dEH-IR-oVG" firstAttribute="centerY" secondItem="jY1-4H-eus" secondAttribute="centerY" id="kqU-0t-YWi"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="6pX-dk-acR" userLabel="Diatonic Mode details">
+                                        <rect key="frame" x="0.0" y="360" width="320" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6pX-dk-acR" id="R16-tu-XKK">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Only diatonic chords (of a randomly chosen major key) are being played in a random order." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Jmd-1m-Wtx" userLabel="Diatonic mode details">
+                                                    <rect key="frame" x="36" y="10" width="264" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" name="customBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="Jmd-1m-Wtx" firstAttribute="leading" secondItem="R16-tu-XKK" secondAttribute="leadingMargin" constant="20" id="314-fl-UY0"/>
+                                                <constraint firstAttribute="trailing" secondItem="Jmd-1m-Wtx" secondAttribute="trailing" constant="20" id="Et5-X8-XRW"/>
+                                                <constraint firstItem="Jmd-1m-Wtx" firstAttribute="top" secondItem="R16-tu-XKK" secondAttribute="top" constant="10" id="R1v-PD-Xl9"/>
+                                                <constraint firstAttribute="bottom" secondItem="Jmd-1m-Wtx" secondAttribute="bottom" constant="30" id="nSS-zL-utN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1067,6 +1118,9 @@
                         <outlet property="autoRestartDetailsLabel" destination="fRI-G7-oFf" id="chW-1F-9Cf"/>
                         <outlet property="autoRestartLabel" destination="5s9-HK-Xe6" id="rVd-fG-9dt"/>
                         <outlet property="autoRestartSwitch" destination="G4g-OB-IaY" id="pIx-xo-jvo"/>
+                        <outlet property="diatonicModeDetailsLabel" destination="Jmd-1m-Wtx" id="MvQ-8d-Dyy"/>
+                        <outlet property="diatonicModeLabel" destination="dEH-IR-oVG" id="JB3-Bf-M21"/>
+                        <outlet property="diatonicModeSwitch" destination="iOy-Ii-byg" id="eWP-zE-maR"/>
                         <outlet property="numberOfChordsDetailsLabel" destination="PJ2-Ei-iqr" id="4PB-mu-Kca"/>
                         <outlet property="numberOfChordsDiplay" destination="z5D-8i-5S0" id="FWk-17-bpY"/>
                         <outlet property="numberOfChordsLabel" destination="cts-x4-jP0" id="ZCQ-sQ-T02"/>
@@ -1096,7 +1150,7 @@
             <color red="0.41999998688697815" green="0.56499999761581421" blue="0.50199997425079346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="customMinorButtonColor">
-            <color red="0.64313725490196072" green="0.76470588235294112" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.64300000667572021" green="0.76499998569488525" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

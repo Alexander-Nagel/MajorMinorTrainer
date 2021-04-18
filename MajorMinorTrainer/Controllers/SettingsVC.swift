@@ -16,6 +16,7 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var numberOfChordsDiplay: UILabel!
     @IBOutlet weak var numberOfChordsDetailsLabel: UILabel!
     
+    
     @IBOutlet weak var pauseBetweenChordsLabel: UILabel!
     @IBOutlet weak var pauseBetweenChordsDiplay: UILabel!
     @IBOutlet weak var pauseBetweenChordsDetailsLabel: UILabel!
@@ -23,8 +24,11 @@ class SettingsVC: UITableViewController {
     
     @IBOutlet weak var autoRestartLabel: UILabel!
     @IBOutlet weak var autoRestartSwitch: UISwitch!
-    
     @IBOutlet weak var autoRestartDetailsLabel: UILabel!
+    
+    @IBOutlet weak var diatonicModeLabel: UILabel!
+    @IBOutlet weak var diatonicModeSwitch: UISwitch!
+    @IBOutlet weak var diatonicModeDetailsLabel: UILabel!
     
     var labels: [UILabel] = []
     
@@ -66,6 +70,16 @@ class SettingsVC: UITableViewController {
             }
         }
     }
+    var diatonicMode: Bool?
+    {
+        didSet {
+            if SETTINGS_DEBUG {print("Change!!! diatonicMode = \(diatonicMode)")}
+            if let dm = diatonicMode {
+                diatonicModeSwitch?.isOn = dm
+            }
+        }
+    }
+    
     
     
     /*{
@@ -99,6 +113,11 @@ class SettingsVC: UITableViewController {
         if let siacr = startImmediatelyAfterCorrectResult {
             autoRestartSwitch?.isOn = siacr
         }
+        
+        if let dm = diatonicMode {
+            diatonicModeSwitch?.isOn = dm
+        }
+
         
         stepper1.wraps = false
         stepper1.autorepeat = true
@@ -142,11 +161,13 @@ class SettingsVC: UITableViewController {
         if let noc = self.numberOfChords,
            let pbc = self.pauseBetweenChords,
 //           let pbr = self.pauseBetweenResults,
-           let siacr = self.startImmediatelyAfterCorrectResult{
+           let siacr = self.startImmediatelyAfterCorrectResult,
+           let dm = self.diatonicMode{
             destinationVC.trainer.userSettings.numberOfChords = noc
             destinationVC.trainer.userSettings.pauseBetweenChords = pbc
 //            destinationVC.trainer.userSettings.pauseBetweenResults = pbr
             destinationVC.trainer.userSettings.startImmediatelyAfterCorrectResult = siacr
+            destinationVC.trainer.userSettings.diatonicMode = dm
         }
     }
     
@@ -162,7 +183,7 @@ class SettingsVC: UITableViewController {
         //self.view.backgroundColor = K.Color.backgroundColor
         tableView.backgroundColor = K.Color.backgroundColor
         
-        labels = [numberOfChordsLabel, numberOfChordsDiplay, numberOfChordsDetailsLabel, pauseBetweenChordsLabel, pauseBetweenChordsDiplay, pauseBetweenChordsDetailsLabel, autoRestartLabel, autoRestartDetailsLabel]
+        labels = [numberOfChordsLabel, numberOfChordsDiplay, numberOfChordsDetailsLabel, pauseBetweenChordsLabel, pauseBetweenChordsDiplay, pauseBetweenChordsDetailsLabel, autoRestartLabel, autoRestartDetailsLabel, diatonicModeLabel, diatonicModeDetailsLabel]
         
         
     }
@@ -223,5 +244,13 @@ class SettingsVC: UITableViewController {
         }
     }
     
+    @IBAction func diatonicModeSwitch(_ sender: UISwitch) {
+        
+        if sender.isOn {
+            diatonicMode = true
+        } else {
+            diatonicMode = false
+        }
+    }
     
 }
