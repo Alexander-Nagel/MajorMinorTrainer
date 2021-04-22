@@ -130,6 +130,7 @@ class StartVC: UIViewController {
         destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
 //        destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
         destinationVC.startImmediatelyAfterCorrectResult = self.trainer.userSettings.startImmediatelyAfterCorrectResult
+        destinationVC.diatonicMode = self.trainer.userSettings.diatonicMode
         
         trainer.sequence = []
         

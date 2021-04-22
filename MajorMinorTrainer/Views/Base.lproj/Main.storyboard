@@ -1054,15 +1054,25 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hlx-ha-km9" userLabel="Diatonic Mode">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hlx-ha-km9" userLabel="Mode">
                                         <rect key="frame" x="0.0" y="316.5" width="320" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hlx-ha-km9" id="jY1-4H-eus">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diatonic Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dEH-IR-oVG">
-                                                    <rect key="frame" x="36" y="19.5" width="110" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dEH-IR-oVG" userLabel="Mode Label">
+                                                    <rect key="frame" x="36" y="19.5" width="43.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Diatonic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mUy-yo-p6K" userLabel="Mode Display">
+                                                    <rect key="frame" x="141" y="15" width="100" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="DPo-nZ-EaI"/>
+                                                        <constraint firstAttribute="height" constant="30" id="x0y-3b-d3l"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1075,10 +1085,12 @@
                                                 </switch>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="iOy-Ii-byg" firstAttribute="leading" secondItem="mUy-yo-p6K" secondAttribute="trailing" constant="10" id="G7T-E8-Pbt"/>
                                                 <constraint firstAttribute="trailing" secondItem="iOy-Ii-byg" secondAttribute="trailing" constant="20" id="US0-VI-GmV"/>
                                                 <constraint firstItem="dEH-IR-oVG" firstAttribute="leading" secondItem="jY1-4H-eus" secondAttribute="leadingMargin" constant="20" id="abr-X1-zCo"/>
                                                 <constraint firstItem="iOy-Ii-byg" firstAttribute="centerY" secondItem="jY1-4H-eus" secondAttribute="centerY" id="eH1-y8-cWO"/>
                                                 <constraint firstItem="dEH-IR-oVG" firstAttribute="centerY" secondItem="jY1-4H-eus" secondAttribute="centerY" id="kqU-0t-YWi"/>
+                                                <constraint firstItem="mUy-yo-p6K" firstAttribute="centerY" secondItem="jY1-4H-eus" secondAttribute="centerY" id="tgS-Hc-tTl"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1089,8 +1101,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Only diatonic chords (of a randomly chosen major key) are being played in a random order." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Jmd-1m-Wtx" userLabel="Diatonic mode details">
-                                                    <rect key="frame" x="36" y="10" width="264" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Jmd-1m-Wtx" userLabel="Diatonic mode details">
+                                                    <rect key="frame" x="36" y="10" width="264" height="40"/>
+                                                    <string key="text">Diatonic Mode: Plays random diatonic major or minor chords of a fixed but randomly chosen key, e.g. A, C#m, E, D... - if A has been chosen as root.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1101,7 +1114,30 @@
                                                 <constraint firstItem="Jmd-1m-Wtx" firstAttribute="leading" secondItem="R16-tu-XKK" secondAttribute="leadingMargin" constant="20" id="314-fl-UY0"/>
                                                 <constraint firstAttribute="trailing" secondItem="Jmd-1m-Wtx" secondAttribute="trailing" constant="20" id="Et5-X8-XRW"/>
                                                 <constraint firstItem="Jmd-1m-Wtx" firstAttribute="top" secondItem="R16-tu-XKK" secondAttribute="top" constant="10" id="R1v-PD-Xl9"/>
-                                                <constraint firstAttribute="bottom" secondItem="Jmd-1m-Wtx" secondAttribute="bottom" constant="30" id="nSS-zL-utN"/>
+                                                <constraint firstAttribute="bottom" secondItem="Jmd-1m-Wtx" secondAttribute="bottom" constant="10" id="nSS-zL-utN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Ds0-aI-7p4" userLabel="Diatonic Mode details">
+                                        <rect key="frame" x="0.0" y="403.5" width="320" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ds0-aI-7p4" id="uFd-UF-xe0">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chromatic Mode: Plays random chromatic chords, e.g. D#m, F, Am, Fmin..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="R9b-fG-kX0" userLabel="Diatonic mode details">
+                                                    <rect key="frame" x="28" y="10" width="272" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" name="customBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="R9b-fG-kX0" secondAttribute="bottom" constant="30" id="B0d-Vq-FQK"/>
+                                                <constraint firstAttribute="trailing" secondItem="R9b-fG-kX0" secondAttribute="trailing" constant="20" id="JsC-fJ-5es"/>
+                                                <constraint firstItem="R9b-fG-kX0" firstAttribute="leading" secondItem="uFd-UF-xe0" secondAttribute="leadingMargin" constant="20" id="yau-vV-Ptb"/>
+                                                <constraint firstItem="R9b-fG-kX0" firstAttribute="top" secondItem="uFd-UF-xe0" secondAttribute="top" constant="10" id="zZw-xx-Ho4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1119,6 +1155,8 @@
                         <outlet property="autoRestartLabel" destination="5s9-HK-Xe6" id="rVd-fG-9dt"/>
                         <outlet property="autoRestartSwitch" destination="G4g-OB-IaY" id="pIx-xo-jvo"/>
                         <outlet property="diatonicModeDetailsLabel" destination="Jmd-1m-Wtx" id="MvQ-8d-Dyy"/>
+                        <outlet property="diatonicModeDetailsLabel2" destination="R9b-fG-kX0" id="47i-OX-vmm"/>
+                        <outlet property="diatonicModeDisplay" destination="mUy-yo-p6K" id="OkY-WX-rgz"/>
                         <outlet property="diatonicModeLabel" destination="dEH-IR-oVG" id="JB3-Bf-M21"/>
                         <outlet property="diatonicModeSwitch" destination="iOy-Ii-byg" id="eWP-zE-maR"/>
                         <outlet property="numberOfChordsDetailsLabel" destination="PJ2-Ei-iqr" id="4PB-mu-Kca"/>
@@ -1133,7 +1171,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="704-Vk-TAG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-936.23188405797111" y="1026.5625"/>
+            <point key="canvasLocation" x="-937.5" y="1025.7042253521126"/>
         </scene>
     </scenes>
     <resources>

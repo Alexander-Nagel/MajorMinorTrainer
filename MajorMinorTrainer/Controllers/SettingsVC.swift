@@ -28,7 +28,9 @@ class SettingsVC: UITableViewController {
     
     @IBOutlet weak var diatonicModeLabel: UILabel!
     @IBOutlet weak var diatonicModeSwitch: UISwitch!
+    @IBOutlet weak var diatonicModeDisplay: UILabel!
     @IBOutlet weak var diatonicModeDetailsLabel: UILabel!
+    @IBOutlet weak var diatonicModeDetailsLabel2: UILabel!
     
     var labels: [UILabel] = []
     
@@ -75,7 +77,7 @@ class SettingsVC: UITableViewController {
         didSet {
             if SETTINGS_DEBUG {print("Change!!! diatonicMode = \(diatonicMode)")}
             if let dm = diatonicMode {
-                diatonicModeSwitch?.isOn = dm
+                diatonicModeSwitch?.isOn = !dm
             }
         }
     }
@@ -115,7 +117,7 @@ class SettingsVC: UITableViewController {
         }
         
         if let dm = diatonicMode {
-            diatonicModeSwitch?.isOn = dm
+            diatonicModeSwitch?.isOn = !dm
         }
 
         
@@ -129,8 +131,8 @@ class SettingsVC: UITableViewController {
         stepper2.wraps = false
         stepper2.autorepeat = true
         stepper2.minimumValue = 1.2
-        stepper2.maximumValue = 3
-        stepper2.stepValue = 0.2
+        stepper2.maximumValue = 2.7
+        stepper2.stepValue = 0.5
         stepper2.value = Double(pauseBetweenChords!)
         
 //        stepper3.wraps = false
@@ -140,6 +142,10 @@ class SettingsVC: UITableViewController {
 //        stepper3.stepValue = 0.1
 //        stepper3.value = Double(pauseBetweenResults!)
 
+        for sw in [autoRestartSwitch, diatonicModeSwitch] {
+            sw?.onTintColor = K.Color.backgroundColor
+        }
+        
         for label in labels {
             label.textColor = UIColor(named: "customSettingsTextColor")
         }
@@ -183,7 +189,7 @@ class SettingsVC: UITableViewController {
         //self.view.backgroundColor = K.Color.backgroundColor
         tableView.backgroundColor = K.Color.backgroundColor
         
-        labels = [numberOfChordsLabel, numberOfChordsDiplay, numberOfChordsDetailsLabel, pauseBetweenChordsLabel, pauseBetweenChordsDiplay, pauseBetweenChordsDetailsLabel, autoRestartLabel, autoRestartDetailsLabel, diatonicModeLabel, diatonicModeDetailsLabel]
+        labels = [numberOfChordsLabel, numberOfChordsDiplay, numberOfChordsDetailsLabel, pauseBetweenChordsLabel, pauseBetweenChordsDiplay, pauseBetweenChordsDetailsLabel, autoRestartLabel, autoRestartDetailsLabel, diatonicModeLabel, diatonicModeDisplay, diatonicModeDetailsLabel, diatonicModeDetailsLabel2]
         
         
     }
@@ -247,9 +253,11 @@ class SettingsVC: UITableViewController {
     @IBAction func diatonicModeSwitch(_ sender: UISwitch) {
         
         if sender.isOn {
-            diatonicMode = true
-        } else {
             diatonicMode = false
+            diatonicModeDisplay.text = "Chromatic"
+        } else {
+            diatonicMode = true
+            diatonicModeDisplay.text = "Diatonic"
         }
     }
     

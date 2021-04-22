@@ -14,11 +14,11 @@ enum chordQuality: Int {
 }
 
 struct UserSettings {
-    var numberOfChords: Int = 3
+    var numberOfChords: Int = 4
     var pauseBetweenChords = 1.2
     var pauseBetweenResults = 0.3
     var startImmediatelyAfterCorrectResult = false
-    var diatonicMode = false
+    var diatonicMode = true
 }
 
 
@@ -151,7 +151,7 @@ class Trainer {
                 // Append found chord to test sequence
                 //
                 sequence?.append(randomDiatonicChord)
-                sequenceRomanNumerals?.append()
+                //sequenceRomanNumerals?.append()
                 
                 //
                 // save chord quality (major or minor)
