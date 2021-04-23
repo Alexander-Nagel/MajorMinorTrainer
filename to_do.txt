@@ -18,6 +18,7 @@ Necessary:
 - upload to appstore
 - OK implement data persistence via UserDefaults to store user settings
 - add copyright / link to about screen
+- show if diatonic or chromatic mode is active
 
 Optional:
 
@@ -28,3 +29,8 @@ Optional:
 - new user setting: record and add arpeggiated chords (up + down) -> make user option
 - OK display name (root) of chord after evaluation
 - OK new user setting: play next chord question right after results if all are correct
+
+Possible Paid Features:
+
+- Roman Numeral Display instead of chord names
+- Chromatic mode 
