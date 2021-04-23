@@ -17,6 +17,8 @@
 		FA217C72261C6DDE009EFECD /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA217C71261C6DDE009EFECD /* StartVC.swift */; };
 		FA217C75261C6DF1009EFECD /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA217C74261C6DF1009EFECD /* AboutVC.swift */; };
 		FA560771261F30FF00F15EC8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA560770261F30FF00F15EC8 /* Constants.swift */; };
+		FA7F50DD2632DF4B008CA18E /* FlashExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F50DC2632DF4B008CA18E /* FlashExtension.swift */; };
+		FA7F50E02632DFB1008CA18E /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7F50DF2632DFB1008CA18E /* HexColorExtension.swift */; };
 		FAD5A7722620561A00B30902 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5A7712620561A00B30902 /* SettingsVC.swift */; };
 		FADFA85E261C7BDA000784E3 /* Trainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADFA85D261C7BDA000784E3 /* Trainer.swift */; };
 		FAEF630E261DBE350098847B /* D#_min.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FAEF62F4261DBE340098847B /* D#_min.mp3 */; };
@@ -71,6 +73,8 @@
 		FA217C71261C6DDE009EFECD /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		FA217C74261C6DF1009EFECD /* AboutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		FA560770261F30FF00F15EC8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		FA7F50DC2632DF4B008CA18E /* FlashExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashExtension.swift; sourceTree = "<group>"; };
+		FA7F50DF2632DFB1008CA18E /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
 		FAD5A7712620561A00B30902 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FADFA85D261C7BDA000784E3 /* Trainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trainer.swift; sourceTree = "<group>"; };
 		FAEF62F4261DBE340098847B /* D#_min.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "D#_min.mp3"; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 				FA217C58261C6B93009EFECD /* Models */,
 				FA217C57261C6B8B009EFECD /* Views */,
 				FA217C59261C6B98009EFECD /* Controllers */,
+				FA7F50DA2632DE9B008CA18E /* Helpers */,
 				FA217C5C261C6BE3009EFECD /* Sounds */,
 				FA217C5A261C6BAD009EFECD /* etc. */,
 				FA217C4E261C5080009EFECD /* Info.plist */,
@@ -234,6 +239,15 @@
 				FAEF6302261DBE340098847B /* SUCCESS.mp3 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		FA7F50DA2632DE9B008CA18E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FA7F50DC2632DF4B008CA18E /* FlashExtension.swift */,
+				FA7F50DF2632DFB1008CA18E /* HexColorExtension.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,8 +359,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAD5A7722620561A00B30902 /* SettingsVC.swift in Sources */,
+				FA7F50E02632DFB1008CA18E /* HexColorExtension.swift in Sources */,
 				FA217C48261C5062009EFECD /* MajorMinorTrainer.xcdatamodeld in Sources */,
 				FA217C75261C6DF1009EFECD /* AboutVC.swift in Sources */,
+				FA7F50DD2632DF4B008CA18E /* FlashExtension.swift in Sources */,
 				FADFA85E261C7BDA000784E3 /* Trainer.swift in Sources */,
 				FA217C72261C6DDE009EFECD /* StartVC.swift in Sources */,
 				FA217C3E261C5060009EFECD /* AppDelegate.swift in Sources */,

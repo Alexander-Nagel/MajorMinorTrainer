@@ -169,12 +169,13 @@ class SettingsVC: UITableViewController {
 //           let pbr = self.pauseBetweenResults,
            let siacr = self.startImmediatelyAfterCorrectResult,
            let dm = self.diatonicMode{
-            destinationVC.trainer.userSettings.numberOfChords = noc
-            destinationVC.trainer.userSettings.pauseBetweenChords = pbc
+            destinationVC.trainer.settings.numberOfChords = noc
+            destinationVC.trainer.settings.pauseBetweenChords = pbc
 //            destinationVC.trainer.userSettings.pauseBetweenResults = pbr
-            destinationVC.trainer.userSettings.startImmediatelyAfterCorrectResult = siacr
-            destinationVC.trainer.userSettings.diatonicMode = dm
+            destinationVC.trainer.settings.autoRestart = siacr
+            destinationVC.trainer.settings.diatonicMode = dm
         }
+        destinationVC.trainer.saveUserSettings()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

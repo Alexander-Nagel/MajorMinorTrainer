@@ -14,20 +14,19 @@ enum chordQuality: Int {
 }
 
 struct UserSettings {
-    var numberOfChords: Int = 4
+    var numberOfChords: Int = 2
     var pauseBetweenChords = 1.2
-    var pauseBetweenResults = 0.3
-    var startImmediatelyAfterCorrectResult = false
+    var autoRestart = false
     var diatonicMode = true
 }
 
-
 class Trainer {
     
-    var userSettings = UserSettings()
-    //var numberOfChords = 4
-    //var pauseBetweenChords = 1.1
-    //var pauseBetweenResults = 0.6
+    var settings: UserSettings
+    
+    let defaults = UserDefaults.standard
+    
+    var pauseBetweenResults = 0.3
     var sequence: [String]? = []
     var sequenceRomanNumerals: [String?] = []
     var solution: [chordQuality]? = []
@@ -41,6 +40,7 @@ class Trainer {
     var repeatingChords = false
     var uniqueChords = false
     var key: String? = ""
+    
     
     
     let majorChords = ["C_maj", "C#_maj", "D_maj", "D#_maj", "E_maj", "F_maj", "F#_maj", "G_maj", "G#_maj", "A_maj", "A#_maj", "B_maj"]
@@ -64,7 +64,8 @@ class Trainer {
     
     
     init() {
-        answer = Array(repeating: chordQuality.undefined, count: userSettings.numberOfChords)
+        settings = UserSettings()
+        answer = Array(repeating: chordQuality.undefined, count: settings.numberOfChords)
         imgColors = []
     }
     
@@ -73,19 +74,19 @@ class Trainer {
         sequence = []
         sequenceRomanNumerals = []
         solution = []
-        answer = Array(repeating: chordQuality.undefined, count: userSettings.numberOfChords)
-        imgColors = Array(repeating: "white", count: userSettings.numberOfChords)
+        answer = Array(repeating: chordQuality.undefined, count: settings.numberOfChords)
+        imgColors = Array(repeating: "white", count: settings.numberOfChords)
         //imgColors = []
         hasBeenEvaluated = false
         isPlaying = true
         key = ""
         
-        if !userSettings.diatonicMode {
+        if !settings.diatonicMode {
             //
-            // default chromatic mode
+            //  chromatic mode
             //
 
-        for _ in 1...userSettings.numberOfChords {
+        for _ in 1...settings.numberOfChords {
             
             guard let quality = chordQuality(rawValue: Int.random(in: 1...2)) else {
                return
@@ -106,23 +107,22 @@ class Trainer {
         }
         } else {
             //
-            // diatonic mode
+            // diatonic mode ( = default)
             //
             
-            
             let randomKey = diatonicChords[Int.random(in: 0...11)]
-            print(randomKey)
             key = randomKey.first
+            print("Chosen key = \(key!)")
             
-            for index in 1...userSettings.numberOfChords {
+            for index in 1...settings.numberOfChords {
                 
                 var randomDiatonicChord = ""
                 
                 if !repeatingChords && !uniqueChords {
-                    print("CASE 1")
+                    //print("CASE 1")
                     repeat {
                         randomDiatonicChord = randomKey[Int.random(in: 0...5)]
-                        print(randomDiatonicChord)
+                        //print(randomDiatonicChord)
                     } while (randomDiatonicChord == sequence?.last)
                 }
                 
@@ -142,9 +142,9 @@ class Trainer {
 //                }
                     
                 if repeatingChords && !uniqueChords {
-                    print("CASE 3")
+                    //print("CASE 3")
                     randomDiatonicChord = randomKey[Int.random(in: 0...5)]
-                    print(randomDiatonicChord)
+                    //print(randomDiatonicChord)
                 }
                 
                 //
@@ -158,9 +158,36 @@ class Trainer {
                 //
                 solution?.append(randomDiatonicChord.suffix(3) == "maj" ? chordQuality.major : chordQuality.minor)
                 
-                
             }
         }
+    }
+    
+    func loadUserSettings() {
+        
+        //print("LOADING USER SETTINGS")
+        
+        if let nOC = defaults.object(forKey:"numberOfChords") as? Int {
+            settings.numberOfChords = nOC
+        }
+        if let pBC = defaults.object(forKey:"pauseBetweenChords") as? Double {
+            settings.pauseBetweenChords = pBC
+        }
+        if let aR = defaults.object(forKey:"autoRestart") as? Bool {
+            settings.autoRestart = aR
+        }
+        if let dM = defaults.object(forKey:"diatonicMode") as? Bool {
+            settings.diatonicMode = dM
+        }
+    }
+    
+    func saveUserSettings() {
+        
+        //print("SAVING USER SETTINGS")
+        
+        defaults.set(settings.numberOfChords, forKey: "numberOfChords")
+        defaults.set(settings.pauseBetweenChords, forKey: "pauseBetweenChords")
+        defaults.set(settings.autoRestart, forKey: "autoRestart")
+        defaults.set(settings.diatonicMode, forKey: "diatonicMode")
     }
 }
 

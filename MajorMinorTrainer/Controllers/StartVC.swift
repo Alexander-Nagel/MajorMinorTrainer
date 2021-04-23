@@ -20,7 +20,11 @@ class StartVC: UIViewController {
     var queue: DispatchQueue?
 
     let trainer = Trainer()
-    
+   
+//
+// MARK: - Outlets
+//
+        
     @IBOutlet weak var hiddenLabel: UILabel!
     @IBOutlet weak var majorLabel: UILabel!
     @IBOutlet weak var minorLabel: UILabel!
@@ -105,14 +109,29 @@ class StartVC: UIViewController {
     var playImageViews: [UIImageView] = []
     var evalutationImageViews: [UIImageView]?
     
+//
+// MARK: - Lifecycle
+//
     override func viewDidLoad() {
         
-        if DUMP {debugDump()}
+        //if DUMP {debugDump()}
         if DEBUG {print(#function)}
         
         super.viewDidLoad()
         
-        for index in 1...6 {print(index.toRoman())}
+        // for index in 1...6 {print(index.toRoman())}
+        
+        //
+        // DELETEME! Retrieve UserDefaults file path
+        //
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let imageURL = documents.appendingPathComponent("tempImage_wb.jpg")
+        //print("Documents directory:", imageURL.path)
+        
+        //
+        // Load User Settings
+        //
+        trainer.loadUserSettings()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -122,33 +141,25 @@ class StartVC: UIViewController {
         // https://stackoverflow.com/questions/39494454/pass-data-between-viewcontroller-and-tabbarcontroller
         
         //
-        // Passing data to other Tab ( = subclass of UINavigationController)
+        // Passing data to SettingsVC ( = subclass of UINavigationController)
         //
         let navController = self.tabBarController?.viewControllers![1] as! UINavigationController
         let destinationVC = navController.topViewController as! SettingsVC
-        destinationVC.numberOfChords = self.trainer.userSettings.numberOfChords
-        destinationVC.pauseBetweenChords = self.trainer.userSettings.pauseBetweenChords
-//        destinationVC.pauseBetweenResults = self.trainer.userSettings.pauseBetweenResults
-        destinationVC.startImmediatelyAfterCorrectResult = self.trainer.userSettings.startImmediatelyAfterCorrectResult
-        destinationVC.diatonicMode = self.trainer.userSettings.diatonicMode
+        destinationVC.numberOfChords = self.trainer.settings.numberOfChords
+        destinationVC.pauseBetweenChords = self.trainer.settings.pauseBetweenChords
+        destinationVC.startImmediatelyAfterCorrectResult = self.trainer.settings.autoRestart
+        destinationVC.diatonicMode = self.trainer.settings.diatonicMode
         
         trainer.sequence = []
-        
-        
-        
     }
-}
-
-//
-// MARK: - Setup Buttons
-//
-extension StartVC {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        if DUMP {debugDump()}
         if DEBUG {print(#function)}
         
+        //
+        // Setup Buttons
+        //
         buttonColumns = [buttonColumn1, buttonColumn2, buttonColumn3, buttonColumn4, buttonColumn5]
         answerButtons = [majButton1, minButton1, majButton2, minButton2, majButton3, minButton3, majButton4, minButton4, majButton5, minButton5]
         evalutationImageViews = [evalImage1, evalImage2, evalImage3, evalImage4, evalImage5]
@@ -159,15 +170,24 @@ extension StartVC {
         xMarkMinImageViews = [xMarkMin1, xMarkMin2, xMarkMin3, xMarkMin4, xMarkMin5]
         playImageViews = [playMaj1, playMin1, playMaj2, playMin2, playMaj3, playMin3, playMaj4, playMin4, playMaj5, playMin5]
         
-        // guard let evalIm = evalutationImageViews else {return}
-        
+        //
+        // Play button flashes when view appears
+        //
         playButton.flash(intervalDuration: 0.1, intervals: 20)
         
+        //
+        // Init parameters
+        //
         trainer.beforeFirstRun = true
         trainer.hasBeenEvaluated = false
+        
+        //
+        // Reset UI
+        //
         resetUI()
     }
 }
+
     
 //
 // MARK: - PLAY BUTTON
@@ -176,8 +196,8 @@ extension StartVC {
     
     @IBAction func playPressed(_ sender: UIButton) {
         
-        if DUMP {debugDump()}
-        if DEBUG {print(#function)}
+        //if DUMP {debugDump()}
+        //if DEBUG {print(#function)}
         
         guard !trainer.isEvaluating else {
             print("wait until evaluation is over!")
@@ -248,11 +268,11 @@ extension StartVC {
                 
                 arrIndex += 1
             }
-            offset += self.trainer.userSettings.pauseBetweenChords
+            offset += self.trainer.settings.pauseBetweenChords
         }
         
         //
-        // Set last qustionmark back to white color
+        // Set last questionmark back to white color
         //
         DispatchQueue.main.asyncAfter(deadline: (.now() + offset)) {
             //self.evalutationImageViews![arrIndex-1].tintColor = K.Color.questionMarkColor
@@ -262,7 +282,7 @@ extension StartVC {
             self.repeatButton.isHidden = false
         }
         
-        print("is playing? \(trainer.isPlaying)")
+        //print("is playing? \(trainer.isPlaying)")
     }
 }
 
@@ -277,38 +297,29 @@ extension StartVC {
         if DEBUG {print(#function)}
         
         guard !trainer.isPlaying else {
-            print("can't repeat while playing!")
+            print("Can't repeat while playing!")
             return
         }
         
         guard !trainer.isEvaluating else {
-            print("wait until evaluation is over!")
+            print("Wait until evaluation is over!")
             return
         }
         
         guard trainer.sequence?.count != 0 else {
-            print("äääääääää")
+            print("trainer.sequence?.count != 0")
             return
         }
         
         guard trainer.imgColors.count != 0 else {
-            print("öööööö")
+            print("trainer.imgColors.count != 0")
             return
         }
         
-//        guard fileNames.count != 0 else {
-//            showAlert("Click Play first!")
-//            return
-//        }
-        
-        //repeatButton.flash()
-        //print("FLASHING!")
-        
-        
-        //print("colors  = \(self.trainer.imgColors)")
-        
-        guard let fileNames = trainer.sequence, let solution = trainer.solution /*, let answer = trainer.answer */ else {return}
-        
+        guard let fileNames = trainer.sequence,
+              let solution = trainer.solution else {
+            return
+        }
         
         //
         // Play chords and set questionmark color of playing chord to black
@@ -330,29 +341,27 @@ extension StartVC {
             DispatchQueue.main.asyncAfter(deadline: (.now() + offset)) {
                 
                 //
-                // Set questionmark color to black temporarily while playing
-                //
-//                self.evalutationImageViews![arrIndex].tintColor = K.Color.questionMarkPlayingColor
-                
-                //
-                // Color maj or min button orange (if it' the solution)
+                // Flash while playing back
                 //
                 if self.trainer.hasBeenEvaluated {
+                    
+                    //
+                    // After Evaluation: Flash solution chord buttons while playing
+                    //
                     if solution[arrIndex] == chordQuality.major {
-                        //                    self.majorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .selected)
-                        //                    self.majorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .normal)
                         self.majorButtons[arrIndex].flash()
                     } else {
-                        //                    self.minorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .selected)
-                        //                    self.minorButtons[arrIndex].setBackgroundColor(color: K.Color.selectedLabelBgColor, forState: .normal)
                         self.minorButtons[arrIndex].flash()
                     }
+                    
                 } else {
                     
+                    //
+                    // Before Evaluation: Flash complete column while playing
+                    //
                     self.majorButtons[arrIndex].flash()
                     self.minorButtons[arrIndex].flash()
                     self.evalutationImageViews![arrIndex].flash()
-                    
                 }
                 
                 //
@@ -361,98 +370,33 @@ extension StartVC {
                 self.playSound(filename: name)
                 
                 //
-                // Determine color to reset previous imgView (if exists)
-                // Can be green (checkmark) or red (X)
-                //
-                if arrIndex > 0 {
-                    var oldColor = UIColor()
-                    let criteria = self.trainer.imgColors[arrIndex-1]
-                    switch criteria {
-                    case "green":
-                        // print("\(arrIndex) it's green")
-                        oldColor = K.Color.chosenRightAnswerColor
-                    case "red":
-                        //print("\(arrIndex) it's red")
-                        oldColor = K.Color.wrongAnswerColor
-                    default:
-                        print("\(arrIndex) it's black")
-                        oldColor = K.Color.questionMarkColor
-                    }
-                    
-                    //
-                    // Reset previous imgView color
-                    //
-                    //self.evalutationImageViews![arrIndex-1].tintColor = oldColor
-                    
-                    //
-                    // Reset prevoius maj or min color to green (if it's the solution)
-                    //
-//                    if self.trainer.hasBeenEvaluated {
-//                        if solution[arrIndex-1] == chordQuality.major {
-//                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-//                            self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-//                        } else {
-//                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-//                            self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-//                        }
-//                    }
-                }
-                
-                //
                 // Proceed to next imgColors array item
                 //
                 arrIndex += 1
                 
             }
-            offset += self.trainer.userSettings.pauseBetweenChords
+            offset += self.trainer.settings.pauseBetweenChords
         }
             
         //
-        // Set last questionmark back to white color
+        // Reset isPlaying flag to false when playing is over
         //
         DispatchQueue.main.asyncAfter(deadline: (.now() + offset)) {
-//            var oldColor = UIColor()
-//            let criteria = self.trainer.imgColors[arrIndex-1]
-//            switch criteria {
-//            case "green":
-//                print("\(arrIndex) it's green")
-//                oldColor = K.Color.chosenRightAnswerColor
-//            case "red":
-//                print("\(arrIndex) it's red")
-//                oldColor = K.Color.wrongAnswerColor
-//            default:
-//                print("\(arrIndex) it's black")
-//                oldColor = K.Color.questionMarkColor
-//            }
-//            self.evalutationImageViews![arrIndex-1].tintColor = oldColor
-           
-//            if  self.trainer.hasBeenEvaluated {
-//                if solution[arrIndex-1] == chordQuality.major {
-//                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-//                    self.majorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-//                } else {
-//                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .selected)
-//                    self.minorButtons[arrIndex-1].setBackgroundColor(color: K.Color.chosenRightAnswerColor, forState: .normal)
-//                }
-//            }
-            
+        
             self.trainer.isPlaying = false
         }
-        
-        
-        
         
         //
         // Reset previous maj or min color to green (if it's the solution)
         //
-        let limit = (trainer.userSettings.numberOfChords - 1)
-        let timeToResetLastColor = (Double(limit + 1) * self.trainer.userSettings.pauseBetweenResults)
-        print("öööö \(timeToResetLastColor)")
-        
-        DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetLastColor)) {
-            
-        
-        }
+//        let limit = (trainer.settings.numberOfChords - 1)
+//        let timeToResetLastColor = (Double(limit + 1) * self.trainer.pauseBetweenResults)
+//        print("öööö \(timeToResetLastColor)")
+//
+//        DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetLastColor)) {
+//
+//
+//        }
         
     }
 }
@@ -464,12 +408,12 @@ extension StartVC {
     
     func playSound(filename: String) {
         
-        if DUMP {debugDump()}
-        if DEBUG {print(#function)}
+        //if DUMP {debugDump()}
+        //if DEBUG {print(#function)}
         
         if filename == "TOGGLE" {
             guard !trainer.isPlaying else {
-                print("no toggle sounds while chords are playing!")
+                //print("no toggle sounds while chords are playing!")
                 return
             }
         }
@@ -519,8 +463,8 @@ extension StartVC {
 
     @IBAction func chordButtonPressed(_ sender: UIButton) {
 
-        if DUMP {debugDump()}
-        if DEBUG {print(#function)}
+       // if DUMP {debugDump()}
+       // if DEBUG {print(#function)}
         
         guard !trainer.isEvaluating else {
             print("wait until evaluation is over!")
@@ -534,67 +478,52 @@ extension StartVC {
             
         }
         
-//        guard !trainer.hasBeenEvaluated else {
-//            showAlert("Press PLAY!", message: "Your answers have been evaluated already.")
-//            return
-        //        }
-        //
         if !trainer.hasBeenEvaluated {
             
             //
-            // Behaviour before evaluation: Chosen button is colored orange. Play NO ound when presed.
+            // Behaviour before evaluation: Chosen button is colored orange. Play NO sound when presed.
             //
             
             let tag = sender.tag
-            print("Tag = \(tag)")
+            // print("Tag = \(tag)")
             switch tag {
             case 1:
-                
                 majButton1.isSelected = true
                 minButton1.isSelected = false
                 trainer.answer[0] = chordQuality.major
             case 2:
-                
                 majButton1.isSelected = false
                 minButton1.isSelected = true
                 trainer.answer[0] = chordQuality.minor
             case 3:
-                
                 majButton2.isSelected = true
                 minButton2.isSelected = false
                 trainer.answer[1] = chordQuality.major
             case 4:
-                
                 majButton2.isSelected = false
                 minButton2.isSelected = true
                 trainer.answer[1] = chordQuality.minor
             case 5:
-                
                 majButton3.isSelected = true
                 minButton3.isSelected = false
                 trainer.answer[2] = chordQuality.major
             case 6:
-                
                 majButton3.isSelected = false
                 minButton3.isSelected = true
                 trainer.answer[2] = chordQuality.minor
             case 7:
-                
                 majButton4.isSelected = true
                 minButton4.isSelected = false
                 trainer.answer[3] = chordQuality.major
             case 8:
-                
                 majButton4.isSelected = false
                 minButton4.isSelected = true
                 trainer.answer[3] = chordQuality.minor
             case 9:
-                
                 majButton5.isSelected = true
                 minButton5.isSelected = false
                 trainer.answer[4] = chordQuality.major
             case 10:
-                
                 majButton5.isSelected = false
                 minButton5.isSelected = true
                 trainer.answer[4] = chordQuality.minor
@@ -603,7 +532,7 @@ extension StartVC {
             }
             
             //
-            // Activate evaluateButton
+            // Activate evaluateButton (and let it flash!) if all guesses are made
             //
             if !trainer.answer.contains(chordQuality.undefined) {
                 evaluateButton.isEnabled = true
@@ -611,9 +540,11 @@ extension StartVC {
                 evaluateButton.flash(intervalDuration: 0.1, intervals: 30)
             }
             
+            //if DEBUG { print(trainer.answer) }
             
-            if DEBUG { print(trainer.answer) }
-            
+            //
+            // Play toggle sound
+            //
             playSound(filename: "TOGGLE")
             
         } else {
@@ -689,24 +620,22 @@ extension StartVC {
             return
         }
         
-        guard trainer.solution?.count == trainer.userSettings.numberOfChords else {
+        guard trainer.solution?.count == trainer.settings.numberOfChords else {
             showAlert("No quizz chords have been chosen yet", message: "Press Play first!")
             return
         }
-        
         
         //
         // Clear eval colors array
         //
         trainer.imgColors = []
         
-        print(trainer.answer)
-        print(trainer.solution)
+        //print(trainer.answer)
+        //print(trainer.solution)
         
         guard let evalIm = evalutationImageViews else {return}
         
-        let limit = (trainer.userSettings.numberOfChords - 1)
-        print("Limit: \(0...limit)")
+        let limit = (trainer.settings.numberOfChords - 1)
         
         trainer.isEvaluating = true
         
@@ -763,8 +692,6 @@ extension StartVC {
                         buttonToColorGreen?.setTitle("\(chordRoot)\(chordQual)", for: .selected)
                         wrongButNotChosenButton?.setTitleColor(K.Color.wrongButNotChosenButtonTextColor, for: .normal)
 
-                       
-                        
                         //
                         // play success sound
                         //
@@ -773,7 +700,7 @@ extension StartVC {
                         //
                         // remember symbol's color
                         //
-                        self.trainer.imgColors.append("green")
+                        //self.trainer.imgColors.append("green")
                         
                     } else {
                     
@@ -810,7 +737,6 @@ extension StartVC {
                             wrongQual = "Major"
                         }
 
-                        
                         //
                         // Mark unselected button as right
                         //
@@ -843,30 +769,26 @@ extension StartVC {
                         //
                         // remember symbol's color
                         //
-                        self.trainer.imgColors.append("red")
+                        //self.trainer.imgColors.append("red")
                         
                     }
                     
+                    //
+                    // Show small play buttons on chord buttons
+                    //
                     for iv in self.playImageViews {
                         iv.isHidden = false
                     }
-                    
-                    
-                    
-                    //print("imags count = \(self.trainer.imgColors?.count)")
-                    //print("colors  = \(self.trainer.imgColors)")
-                    
-                    //evalIm[index].isHidden = false
                 }
             }
-            offset += self.trainer.userSettings.pauseBetweenResults
+            offset += self.trainer.pauseBetweenResults
             //print("offset \(offset) added!")
         }
         
         //
         // Reset isPlaying flag to false
         //
-        let timeToResetPlayingStatus = (Double(limit + 2) * self.trainer.userSettings.pauseBetweenResults)
+        let timeToResetPlayingStatus = (Double(limit + 2) * self.trainer.pauseBetweenResults)
         DispatchQueue.main.asyncAfter(deadline: (.now() + timeToResetPlayingStatus)) {
             self.trainer.isEvaluating = false
             
@@ -874,7 +796,7 @@ extension StartVC {
             // restart if all answer are correct and startImmediatelyAfterCorrectResult is set
             //
             if self.trainer.solution == self.trainer.answer {
-                if self.trainer.userSettings.startImmediatelyAfterCorrectResult {
+                if self.trainer.settings.autoRestart {
                     self.playPressed(self.playButton)
                 }
             }
@@ -886,7 +808,6 @@ extension StartVC {
         evaluateButton.isEnabled = false
         evaluateButton.isHidden = true
         trainer.hasBeenEvaluated = true
-        
     }
 }
 
@@ -908,64 +829,7 @@ extension StartVC {
     }
 }
 
-//
-// MARK: - blink extension for buttons
-//
-public extension UIView {
-    
-  func blink(duration: TimeInterval) {
 
-    
-    let initialAlpha: CGFloat = 1
-    let finalAlpha: CGFloat = 0.5
-    
-    alpha = initialAlpha
-    
-    UIView.animateKeyframes(withDuration: duration, delay: 0, options: .beginFromCurrentState) {
-      UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
-        self.alpha = finalAlpha
-      }
-      
-      UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
-        self.alpha = initialAlpha
-      }
-    }
-  }
-}
-
-//
-// MARK: - flash extension for buttons
-//
-extension UIButton {
-
-    func flash(intervalDuration duration: Double = 0.1,
-               intervals repeatCount: Float = 5 ) {
-        
-        let flash = CABasicAnimation(keyPath: "opacity")
-        flash.duration = duration
-        flash.fromValue = 1
-        flash.toValue = 0.0
-        flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        flash.autoreverses = true
-        flash.repeatCount = repeatCount
-        layer.add(flash, forKey: nil)
-    }
-}
-extension UIImageView {
-
-    func flash(intervalDuration duration: Double = 0.1,
-               intervals repeatCount: Float = 5 ) {
-        
-        let flash = CABasicAnimation(keyPath: "opacity")
-        flash.duration = duration
-        flash.fromValue = 1
-        flash.toValue = 0.0
-        flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        flash.autoreverses = true
-        flash.repeatCount = repeatCount
-        layer.add(flash, forKey: nil)
-    }
-}
 
 
 
@@ -998,8 +862,8 @@ extension StartVC {
         //
         // Show columns needed for test
         //
-        let limit = (trainer.userSettings.numberOfChords - 1)
-        print("Limit: \(0...limit)")
+        let limit = (trainer.settings.numberOfChords - 1)
+        //print("Limit: \(0...limit)")
         for index in 0...limit {
             buttonColumns[index].isHidden = false
         }
@@ -1081,7 +945,7 @@ extension StartVC {
         // Set ImageViews to questionmarks
         //
         if let evalIm = evalutationImageViews {
-            for index in 0...(trainer.userSettings.numberOfChords-1) {
+            for index in 0...(trainer.settings.numberOfChords-1) {
                 evalIm[index].image = UIImage(systemName: K.Image.questionImage)
                 evalIm[index].tintColor = K.Color.questionMarkColor
                 trainer.imgColors.append("white")
