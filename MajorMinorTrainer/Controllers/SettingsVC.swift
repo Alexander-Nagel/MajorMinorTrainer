@@ -192,6 +192,7 @@ class SettingsVC: UITableViewController {
         labels = [numberOfChordsLabel, numberOfChordsDiplay, numberOfChordsDetailsLabel, pauseBetweenChordsLabel, pauseBetweenChordsDiplay, pauseBetweenChordsDetailsLabel, autoRestartLabel, autoRestartDetailsLabel, diatonicModeLabel, diatonicModeDisplay, diatonicModeDetailsLabel, diatonicModeDetailsLabel2]
         
         
+        
     }
     
     //

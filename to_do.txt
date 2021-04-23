@@ -16,7 +16,8 @@ Necessary:
 - OK create icons
 - create screenshots for appstore / mockups for website
 - upload to appstore
-
+- implement data persistence via UserDefaults to store user settings
+- add copyright / link to about screen
 
 Optional:
 
