@@ -111,7 +111,13 @@ class Trainer {
             //
             
             let randomKey = diatonicChords[Int.random(in: 0...11)]
-            key = randomKey.first
+            guard let chosenKey = randomKey.first else {
+                fatalError("Could not chose a key - How could that have happened at all???")
+            }
+            let keyRoot = getChordNameFromFileName(fileName: chosenKey)
+            let keyQuality = (getChordQualityFromFileName(fileName: chosenKey) == "maj") ? "" : "m"
+            key = keyRoot + keyQuality
+            
             print("Chosen key = \(key!)")
             
             for index in 1...settings.numberOfChords {
@@ -194,4 +200,32 @@ class Trainer {
 func round (_ input: Double, toDigits digits: Int) -> Double {
     
     return Double(String(format: "%0.\(digits)f", input)) ?? 0
+}
+
+extension Trainer {
+    
+    func getChordNameFromFileName(fileName: String) -> String {
+        
+        print()
+        var result = ""
+        if let index = fileName.firstIndex(of: "_") {
+            result = String(fileName.prefix(upTo: index))
+            //print("Chordname = \(result)")
+            return result
+        }
+        return result
+    }
+    
+    func getChordQualityFromFileName(fileName: String) -> String {
+        
+        print()
+        var result = ""
+        if let index = fileName.firstIndex(of: "_") {
+            result = String(fileName.suffix(from: index))
+            //print("Chordquality = \(result)")
+            return String(result.dropFirst())
+        }
+        return result
+    }
+    
 }

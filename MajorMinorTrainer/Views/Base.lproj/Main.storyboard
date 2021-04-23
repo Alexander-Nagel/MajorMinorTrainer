@@ -107,6 +107,13 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MO6-js-Cs0">
+                                                                <rect key="frame" x="-4" y="-25" width="57" height="100"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="Byd-mk-zrs">
@@ -740,6 +747,7 @@
                         <outlet property="evalImage5" destination="vJh-ej-Eg4" id="pJu-HN-baQ"/>
                         <outlet property="evaluateButton" destination="qNx-ql-i1v" id="AWd-Gh-rfP"/>
                         <outlet property="hiddenLabel" destination="hFw-Sg-wNt" id="Xy0-nd-89u"/>
+                        <outlet property="keyLabel" destination="MO6-js-Cs0" id="rzk-CV-0Mv"/>
                         <outlet property="majButton1" destination="Gfr-D8-Wsa" id="xe4-NK-hHE"/>
                         <outlet property="majButton2" destination="22s-Cs-5nV" id="m1A-Vv-oBm"/>
                         <outlet property="majButton3" destination="D8B-TN-aFr" id="IAh-4L-O6R"/>

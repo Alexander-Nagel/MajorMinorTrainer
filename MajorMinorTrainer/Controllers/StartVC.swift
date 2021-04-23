@@ -98,6 +98,7 @@ class StartVC: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var repeatButton: UIButton!
     @IBOutlet weak var evaluateButton: UIButton!
+    @IBOutlet weak var keyLabel: UILabel!
     
     var buttonColumns: [UIStackView] = []
     var answerButtons: [UIButton] = []
@@ -311,10 +312,10 @@ extension StartVC {
             return
         }
         
-        guard trainer.imgColors.count != 0 else {
-            print("trainer.imgColors.count != 0")
-            return
-        }
+//        guard trainer.imgColors.count != 0 else {
+//            print("trainer.imgColors.count != 0")
+//            return
+//        }
         
         guard let fileNames = trainer.sequence,
               let solution = trainer.solution else {
@@ -557,34 +558,34 @@ extension StartVC {
             switch tag {
             case 1:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[0])!) + "_maj")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[0])!) + "_maj")
             case 2:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[0])!) + "_min")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[0])!) + "_min")
             case 3:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[1])!) + "_maj")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[1])!) + "_maj")
             case 4:
-                
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[1])!) + "_min")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[1])!) + "_min")
+        
             case 5:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[2])!) + "_maj")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[2])!) + "_maj")
             case 6:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[2])!) + "_min")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[2])!) + "_min")
             case 7:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[3])!) + "_maj")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[3])!) + "_maj")
             case 8:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[3])!) + "_min")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[3])!) + "_min")
             case 9:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[4])!) + "_maj")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[4])!) + "_maj")
             case 10:
                 
-                playSound(filename: getChordNameFromFileName(fileName: (trainer.sequence?[4])!) + "_min")
+                playSound(filename: trainer.getChordNameFromFileName(fileName: (trainer.sequence?[4])!) + "_min")
             default:
                 showAlert("This shouldn't have happened at all.")
             }
@@ -651,8 +652,8 @@ extension StartVC {
                     //
                     // Extract current Root and Chord Quality from filename
                     //
-                    let chordRoot = self.getChordNameFromFileName(fileName: self.trainer.sequence?[index] ?? "")
-                    var chordQual = self.getChordQualityFromFileName(fileName: self.trainer.sequence?[index] ?? "")
+                    let chordRoot = self.trainer.getChordNameFromFileName(fileName: self.trainer.sequence?[index] ?? "")
+                    var chordQual = self.trainer.getChordQualityFromFileName(fileName: self.trainer.sequence?[index] ?? "")
                     //print("root = \(chordRoot)")
                     //print("qual = \(chordQuality)")
                     chordQual = chordQual == "maj" ? "": "m"
@@ -785,6 +786,11 @@ extension StartVC {
             //print("offset \(offset) added!")
         }
         
+        keyLabel.isHidden = true // TODO! FIX STYLING!
+        if let key = trainer.key {
+            keyLabel.text = "Root \(key)"
+        }
+        
         //
         // Reset isPlaying flag to false
         //
@@ -893,6 +899,16 @@ extension StartVC {
             iv.isHidden = true
         }
         
+        keyLabel.isHidden = true
+        keyLabel.lineBreakMode = .byWordWrapping
+        keyLabel.numberOfLines = 0
+        keyLabel.font = keyLabel.font.withSize(28)
+        keyLabel.textColor = K.Color.selectedLabelBgColor
+        
+        keyLabel.adjustsFontSizeToFitWidth = true
+        
+        
+        
         //
         // Hide all xmarks
         //
@@ -951,6 +967,10 @@ extension StartVC {
                 trainer.imgColors.append("white")
             }
         }
+        
+        keyLabel.isHidden = true
+        keyLabel.text = ""
+        
     }
 }
 
@@ -982,33 +1002,7 @@ extension StartVC {
     }
 }
 
-extension StartVC {
-    
-    func getChordNameFromFileName(fileName: String) -> String {
-        
-        print()
-        var result = ""
-        if let index = fileName.firstIndex(of: "_") {
-            result = String(fileName.prefix(upTo: index))
-            //print("Chordname = \(result)")
-            return result
-        }
-        return result
-    }
-    
-    func getChordQualityFromFileName(fileName: String) -> String {
-        
-        print()
-        var result = ""
-        if let index = fileName.firstIndex(of: "_") {
-            result = String(fileName.suffix(from: index))
-            //print("Chordquality = \(result)")
-            return String(result.dropFirst())
-        }
-        return result
-    }
-    
-}
+
 
 extension Int {
     
