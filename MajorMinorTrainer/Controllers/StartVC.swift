@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-let DEBUG = true
+let DEBUG = false
 let DUMP = false
 
 class StartVC: UIViewController {
@@ -137,7 +137,7 @@ class StartVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        print(#function)
+        //print(#function)
  
         // https://stackoverflow.com/questions/39494454/pass-data-between-viewcontroller-and-tabbarcontroller
         
@@ -201,12 +201,12 @@ extension StartVC {
         //if DEBUG {print(#function)}
         
         guard !trainer.isEvaluating else {
-            print("wait until evaluation is over!")
+            //print("wait until evaluation is over!")
             return
         }
         
         guard !trainer.isPlaying else {
-            print("wait till playing is over")
+            //print("wait till playing is over")
             return
         }
         
@@ -298,17 +298,17 @@ extension StartVC {
         if DEBUG {print(#function)}
         
         guard !trainer.isPlaying else {
-            print("Can't repeat while playing!")
+            //print("Can't repeat while playing!")
             return
         }
         
         guard !trainer.isEvaluating else {
-            print("Wait until evaluation is over!")
+            //print("Wait until evaluation is over!")
             return
         }
         
         guard trainer.sequence?.count != 0 else {
-            print("trainer.sequence?.count != 0")
+            //print("trainer.sequence?.count != 0")
             return
         }
         
@@ -436,7 +436,7 @@ extension StartVC {
                 player.play()
 
             } catch let error {
-                print(error.localizedDescription)
+                //print(error.localizedDescription)
             }
     }
 }

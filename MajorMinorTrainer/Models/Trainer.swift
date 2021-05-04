@@ -118,7 +118,7 @@ class Trainer {
             let keyQuality = (getChordQualityFromFileName(fileName: chosenKey) == "maj") ? "" : "m"
             key = keyRoot + keyQuality
             
-            print("Chosen key = \(key!)")
+            //print("Chosen key = \(key!)")
             
             for index in 1...settings.numberOfChords {
                 
@@ -206,7 +206,7 @@ extension Trainer {
     
     func getChordNameFromFileName(fileName: String) -> String {
         
-        print()
+        //print()
         var result = ""
         if let index = fileName.firstIndex(of: "_") {
             result = String(fileName.prefix(upTo: index))
@@ -218,7 +218,7 @@ extension Trainer {
     
     func getChordQualityFromFileName(fileName: String) -> String {
         
-        print()
+        //print()
         var result = ""
         if let index = fileName.firstIndex(of: "_") {
             result = String(fileName.suffix(from: index))
